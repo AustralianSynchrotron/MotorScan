@@ -10,7 +10,7 @@ Axis::Axis(QWidget *parent) :
     motor(new QCaMotorGUI(this))
 {
   ui->setupUi(this);
-  ui->setupPlace->insertWidget(0, motor->mainButton());
+  ui->setupPlace->insertWidget(0, motor->basicUI()->setup);
 
   connect(motor, SIGNAL(changedConnected(bool)), SLOT(setConnected(bool)));
   connect(motor, SIGNAL(changedMoving(bool)), SIGNAL(statusChanged()));
@@ -42,7 +42,7 @@ Axis::Axis(QWidget *parent) :
 
 
 void Axis::setConnected(bool con) {
-  motor->mainButton()->setStyleSheet( con ?  goodStyle : badStyle );
+  motor->basicUI()->setup->setStyleSheet( con ?  goodStyle : badStyle );
   if ( ! con )
     ui->val->setText("disconnected");
   positionsAcceptable();
