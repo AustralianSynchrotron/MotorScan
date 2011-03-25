@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>axis</class>
+ <widget class="QWidget" name="axis">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>669</width>
+    <height>493</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <item row="0" column="0" colspan="5">
+    <widget class="QWidget" name="setupW" native="true">
+     <layout class="QHBoxLayout" name="setupPlace">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_35">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>start</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QMDoubleSpinBox" name="start">
+     <property name="toolTip">
+      <string>Start point of the scan</string>
+     </property>
+     <property name="minimum">
+      <double>-2147483647.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>2147483647.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLabel" name="label_38">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>points</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QMSpinBox" name="points">
+     <property name="toolTip">
+      <string>Number of points of the scan.</string>
+     </property>
+     <property name="minimum">
+      <number>2</number>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+     <property name="value">
+      <number>2</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QMDoubleSpinBox" name="step">
+     <property name="toolTip">
+      <string>Step size</string>
+     </property>
+     <property name="minimum">
+      <double>-2147483647.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>2147483647.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_36">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>end</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QMDoubleSpinBox" name="end">
+     <property name="toolTip">
+      <string>End point of the scan</string>
+     </property>
+     <property name="minimum">
+      <double>-2147483647.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>2147483647.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QLabel" name="label_33">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>width</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QMDoubleSpinBox" name="width">
+     <property name="toolTip">
+      <string>Scan width</string>
+     </property>
+     <property name="minimum">
+      <double>-2147483647.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>2147483647.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6">
+    <widget class="QLabel" name="label_37">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>mode</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="7">
+    <widget class="QComboBox" name="mode">
+     <property name="toolTip">
+      <string>Driving mode.</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Relative</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Absolute</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="2" rowspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QLabel" name="label_34">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>step</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5" rowspan="2">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6" colspan="2">
+    <widget class="QLabel" name="val">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>disconnected</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QMDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>qcamotorgui-additional.h</header>
+   <slots>
+    <signal>valueEdited(double)</signal>
+    <signal>escaped()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>QMSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>qcamotorgui-additional.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>start</tabstop>
+  <tabstop>end</tabstop>
+  <tabstop>points</tabstop>
+  <tabstop>width</tabstop>
+  <tabstop>step</tabstop>
+  <tabstop>mode</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

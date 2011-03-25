@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="212.196mm"
+   height="191.294mm"
+   version="1.2"
+   id="svg2897"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Graph1.svg"
+   inkscape:export-filename="/home/antonmx/tmp/Graph1.png"
+   inkscape:export-xdpi="478.06"
+   inkscape:export-ydpi="478.06">
+  <metadata
+     id="metadata3593">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Qt Svg Document</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1580"
+     id="namedview3591"
+     showgrid="false"
+     inkscape:zoom="1.9283668"
+     inkscape:cx="287.45097"
+     inkscape:cy="368.74585"
+     inkscape:window-x="-4"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2897" />
+  <title
+     id="title2899">Qt Svg Document</title>
+  <desc
+     id="desc2901">Generated with Qt</desc>
+  <defs
+     id="defs2903">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 338.90671 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="751.87561 : 338.90671 : 1"
+       inkscape:persp3d-origin="375.93781 : 225.93781 : 1"
+       id="perspective3595" />
+    <inkscape:perspective
+       id="perspective4041"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <image
+     y="88.629181"
+     x="340.58099"
+     id="image4043"
+     height="158.33432"
+     width="157.69844"
+     xlink:href="file:///home/antonmx/work/projects/motormx/motormx/Stepper_motor_1.png" />
+  <g
+     style="font-size:16px;font-style:normal;font-weight:400;fill:none;stroke:none;font-family:Bitstream Vera Sans"
+     id="g2911"
+     font-style="normal"
+     font-weight="400"
+     font-size="16"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)">
+    <path
+       id="path2913"
+       d="M 7,8 794,8 794,706 7,706 7,8" />
+  </g>
+  <g
+     style="font-size:16px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2915"
+     font-style="normal"
+     font-weight="400"
+     font-size="16"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2917"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2923"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2929"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2931"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2933"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2935"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2937"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:11.4553194;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:2;stroke-opacity:1;stroke-dasharray:none;font-family:Bitstream Vera Sans"
+     id="g2939"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     stroke-miterlimit="2"
+     transform="matrix(1.2374085,0,0,1.236646,-107.60389,-109.16878)">
+    <path
+       style="fill:none;stroke-width:11.4553194;stroke-miterlimit:2;stroke-dasharray:none"
+       d="m 209.5,545.333 c 4.48771,-88.6264 75.87204,-165.68623 162.2332,-181.98858 30.49181,-8.1551 62.10139,-3.25451 92.92743,-5.62346 54.33232,-6.77588 104.66335,-40.86218 127.34315,-91.28299 C 606.76142,237.49693 615.58587,206.03503 623.5,174.667"
+       id="polyline2941" />
+  </g>
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2943"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2945"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2947"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#ff0000;stroke-width:11.4553194;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:2;stroke-opacity:1;stroke-dasharray:none;font-family:Bitstream Vera Sans"
+     id="g2949"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     stroke-miterlimit="2"
+     transform="matrix(1.2409534,0,0,2.1995748,-104.93178,-274.58732)">
+    <path
+       style="fill:none;stroke-width:11.4553194;stroke-miterlimit:2;stroke-dasharray:none"
+       d="m 209.5,174.667 c 64.812,-21.14727 95.05426,75.51478 163.84307,65.525 66.29714,9.29207 150.09979,10.63905 195.70136,-46.74809 13.81535,-14.27266 34.16384,-26.41247 54.45557,-18.77695"
+       id="polyline2951" />
+  </g>
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2953"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2955"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2957"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2959"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,58.174591,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2961"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,58.174591,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2963"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,105.36478,577.41828)"
+     vector-effect="non-scaling-stroke">
+    <text
+       style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       id="text2965"
+       font-style="normal"
+       font-weight="700"
+       font-size="26.6544"
+       y="25"
+       x="204.5"
+       xml:space="preserve">Y Axis Title</text>
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2967"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,58.174591,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2969"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,58.174591,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2971"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2973"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2975"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2981"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,86.109212,570.14042)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2983"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2989"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,107.93314,489.82838)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2991"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2997"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,86.109212,408.64339)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g2999"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3005"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,117.53566,328.33135)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3007"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3013"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,94.838781,247.14636)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3015"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3021"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,117.53566,165.96137)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3023"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3029"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,94.838781,84.776375)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3031"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3033"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439986999999888px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:5.72765957;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+     id="g3035"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)">
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3037"
+       points="106,619 102,619 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3039"
+       points="106,601 102,601 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3041"
+       points="106,582 102,582 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3043"
+       points="106,564 102,564 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3045"
+       points="106,527 102,527 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3047"
+       points="106,508 102,508 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3049"
+       points="106,490 102,490 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3051"
+       points="106,471 102,471 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3053"
+       points="106,434 102,434 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3055"
+       points="106,416 102,416 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3057"
+       points="106,397 102,397 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3059"
+       points="106,379 102,379 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3061"
+       points="106,341 102,341 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3063"
+       points="106,323 102,323 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3065"
+       points="106,304 102,304 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3067"
+       points="106,286 102,286 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3069"
+       points="106,249 102,249 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3071"
+       points="106,230 102,230 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3073"
+       points="106,212 102,212 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3075"
+       points="106,193 102,193 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3077"
+       points="106,156 102,156 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3079"
+       points="106,138 102,138 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3081"
+       points="106,119 102,119 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3083"
+       points="106,101 102,101 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3085"
+       points="106,638 99,638 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3087"
+       points="106,545 99,545 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3089"
+       points="106,453 99,453 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3091"
+       points="106,360 99,360 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3093"
+       points="106,267 99,267 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3095"
+       points="106,175 99,175 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3097"
+       points="106,82 99,82 " />
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3099"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439986999999888px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:5.72765957;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+     id="g3101"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)">
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3103"
+       points="106,82 106,638 " />
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3105"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3107"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3109"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,744.31872,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3111"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0,-0.87295691,0.87295691,0,744.31872,589.34547)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3113"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3115"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3117"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3123"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,570.14042)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3125"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3131"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,695.43314,489.82838)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3133"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3139"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,408.64339)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3141"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3147"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,328.33135)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3149"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3155"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,247.14636)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3157"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3163"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,165.96137)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3165"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3171"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,694.56018,84.776375)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3173"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3175"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3241"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3247"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3249"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3251"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,611.16939)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3253"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,611.16939)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3255"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,141.41605,592.50074)"
+     vector-effect="non-scaling-stroke">
+    <text
+       style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       id="text3257"
+       font-style="normal"
+       font-weight="700"
+       font-size="26.6544"
+       y="24"
+       x="249.5"
+       xml:space="preserve">X Axis Title</text>
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:700;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3259"
+     font-style="normal"
+     font-weight="700"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,611.16939)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3261"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,611.16939)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3263"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3265"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3267"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3273"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3275"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3281"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,221.41753,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3283"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3289"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,301.72957,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3291"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3297"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,407.35736,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3299"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3305"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,485.92348,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3307"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3313"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,588.05944,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3315"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3321"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,666.62556,590.21843)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3323"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3325"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439986999999888px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:5.72765957;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+     id="g3327"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)">
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3329"
+       points="127,638 127,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3331"
+       points="147,638 147,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3333"
+       points="168,638 168,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3335"
+       points="189,638 189,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3337"
+       points="230,638 230,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3339"
+       points="251,638 251,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3341"
+       points="272,638 272,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3343"
+       points="292,638 292,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3345"
+       points="334,638 334,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3347"
+       points="354,638 354,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3349"
+       points="375,638 375,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3351"
+       points="396,638 396,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3353"
+       points="437,638 437,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3355"
+       points="458,638 458,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3357"
+       points="479,638 479,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3359"
+       points="499,638 499,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3361"
+       points="541,638 541,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3363"
+       points="561,638 561,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3365"
+       points="582,638 582,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3367"
+       points="603,638 603,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3369"
+       points="644,638 644,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3371"
+       points="665,638 665,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3373"
+       points="686,638 686,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3375"
+       points="706,638 706,642 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3377"
+       points="106,638 106,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3379"
+       points="210,638 210,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3381"
+       points="313,638 313,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3383"
+       points="417,638 417,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3385"
+       points="520,638 520,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3387"
+       points="624,638 624,645 " />
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3389"
+       points="727,638 727,645 " />
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3391"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439986999999888px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:5.72765957;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans;stroke-miterlimit:4;stroke-dasharray:none"
+     id="g3393"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)">
+    <polyline
+       style="fill:none;stroke-width:5.72765957;stroke-miterlimit:4;stroke-dasharray:none"
+       id="polyline3395"
+       points="106,638 727,638 " />
+  </g>
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3397"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3399"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3401"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#c7cbd1;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3403"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3405"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3407"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3409"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3415"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,120.15453,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3417"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3423"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,221.41753,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3425"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3431"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,301.72957,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3433"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3439"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,407.35736,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3441"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3447"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,485.92348,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3449"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3455"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,588.05944,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3457"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3463"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,666.62556,66.444279)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3465"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3467"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3533"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:26.65439987px;font-style:normal;font-weight:400;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3539"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6544"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3541"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3547"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3549"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3551"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3557"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.66670036px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3559"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.66670036px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3565"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3567"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3569"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3575"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.66670036px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3577"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:26.66670036px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3583"
+     font-style="normal"
+     font-weight="400"
+     font-size="26.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3585"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     transform="matrix(0.87295691,0,0,0.87295691,352.36107,438.32392)"
+     vector-effect="non-scaling-stroke" />
+  <g
+     style="font-size:18.66670036px;font-style:normal;font-weight:700;fill:none;stroke:#d2def0;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3587"
+     font-style="normal"
+     font-weight="700"
+     font-size="18.6667"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+  <g
+     style="font-size:16px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Bitstream Vera Sans"
+     id="g3589"
+     font-style="normal"
+     font-weight="400"
+     font-size="16"
+     vector-effect="non-scaling-stroke"
+     transform="matrix(0.87295691,0,0,0.87295691,51.190936,22.796434)" />
+</svg>
