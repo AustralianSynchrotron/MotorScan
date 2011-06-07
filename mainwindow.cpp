@@ -231,6 +231,7 @@ QString MainWindow::prepareAutoSave() {
 
   QString tryName;
 
+  ui->saveName->setEnabled( ! ui->autoName->isChecked() );
   if ( ui->autoName->isChecked() ) {
 
     const QString fn = "scan_" +
@@ -812,7 +813,10 @@ MainWindow::Signal::~Signal() {
 
 
 double MainWindow::Signal::getUpdated(int point) {
-  return graph->newData(point, pv->getUpdated().toDouble());
+  QVariant ret = pv->getUpdated();
+  if ( ! ret.isValid() )
+    ret = pv->get();
+  return graph->newData(point, ret.toDouble());
 }
 
 double MainWindow::Signal::get(int point) {

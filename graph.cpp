@@ -1,4 +1,7 @@
 #include<graph.h>
+#include <qwt_scale_draw.h>
+#include <qwt_scale_engine.h>
+#include <qwt_symbol.h>
 
 
 Graph::Graph(QWidget *parent) :
@@ -32,6 +35,14 @@ Graph::Graph(QWidget *parent) :
   connect(ui->scaleModel, SIGNAL(buttonClicked(int)), SLOT(linLog()));
 
   curve->setPen(QPen(QColor(255,0,0)));
+  /**/
+  curve->setStyle(QwtPlotCurve::Lines);
+  QwtSymbol symbol = curve->symbol();
+  symbol.setSize(8);
+  symbol.setStyle(QwtSymbol::Ellipse);
+  curve->setSymbol(symbol);
+  curve->setPaintAttribute(QwtPlotCurve::PaintFiltered);
+  /**/
   //curve->setStyle(QwtPlotCurve::Dots);
 
   curve->setData(cData);
