@@ -769,7 +769,7 @@ MainWindow::Signal::Signal(QWidget* parent) :
     tableItem(new QTableWidgetItem()),
     plotWin(new QMdiSubWindow(parent)),
 
-    pv(new QEpicsPV(this)),
+    pv(new QEpicsPv(this)),
 
     graph(new Graph)
 

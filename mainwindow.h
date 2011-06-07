@@ -15,7 +15,6 @@
 #include <QMenu>
 #include <QProcess>
 
-#include <qepicspv.h>
 #include <qcamotorgui.h>
 
 #include <graph.h>
@@ -91,12 +90,12 @@ private slots:
 class MainWindow::Trigger : public QObject {
   Q_OBJECT;
 public:
-  QEpicsPV * pv;
+  QEpicsPv * pv;
   QPushButton * rem;
   QLineEdit * trig;
   QLineEdit * val;
   inline Trigger(QWidget* parent=0) :
-      pv(new QEpicsPV(this)),
+      pv(new QEpicsPv(this)),
       rem(new QPushButton("-", parent)),
       trig(new QLineEdit(parent)),
       val(new QLineEdit(parent)) {
@@ -166,7 +165,7 @@ public:
   QLabel * val;
   QTableWidgetItem * tableItem;
   QMdiSubWindow * plotWin;
-  QEpicsPV * pv;
+  QEpicsPv * pv;
   Graph * graph;
 
 private:
