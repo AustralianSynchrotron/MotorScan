@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                 QSettings::IniFormat);
 
   if ( localSettings->contains("xMotor") )
-    ui->xAxis->motor->setPv(localSettings->value("xMotor").toString());
+    ui->xAxis->motor->motor()->setPv(localSettings->value("xMotor").toString());
   if ( localSettings->contains("xMotorStart") ) {
     bool ok;
     double val = localSettings->value("xMotorStart").toDouble(&ok);
@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->yAxis->setEnabled(secDim);
 
   if ( localSettings->contains("yMotor") )
-    ui->yAxis->motor->setPv(localSettings->value("yMotor").toString());
+    ui->yAxis->motor->motor()->setPv(localSettings->value("yMotor").toString());
   if ( localSettings->contains("yMotorStart") ) {
     bool ok;
     double val = localSettings->value("yMotorStart").toDouble(&ok);
@@ -165,9 +165,9 @@ MainWindow::MainWindow(QWidget *parent) :
   localSettings->endArray();
 
   connect(ui->xAxis, SIGNAL(settingChanged()), SLOT(storeSettings()));
-  connect(ui->xAxis->motor, SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(ui->xAxis->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
   connect(ui->yAxis, SIGNAL(settingChanged()), SLOT(storeSettings()));
-  connect(ui->yAxis->motor, SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(ui->yAxis->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
   connect(ui->scan2D, SIGNAL(toggled(bool)), SLOT(storeSettings()));
   connect(ui->after, SIGNAL(activated(QString)), SLOT(storeSettings()));
   connect(ui->saveDir, SIGNAL(editingFinished()), SLOT(storeSettings()));
@@ -180,13 +180,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::storeSettings() {
 
-  localSettings->setValue("xMotor", ui->xAxis->motor->getPv());
+  localSettings->setValue("xMotor", ui->xAxis->motor->motor()->getPv());
   localSettings->setValue("xMotorStart", ui->xAxis->ui->start->value());
   localSettings->setValue("xMotorEnd", ui->xAxis->ui->end->value());
   localSettings->setValue("xMotorPoints", ui->xAxis->ui->points->value());
   localSettings->setValue("xMotorMode", ui->xAxis->ui->mode->currentText());
   localSettings->setValue("2D", ui->scan2D->isChecked());
-  localSettings->setValue("yMotor", ui->yAxis->motor->getPv());
+  localSettings->setValue("yMotor", ui->yAxis->motor->motor()->getPv());
   localSettings->setValue("yMotorStart", ui->yAxis->ui->start->value());
   localSettings->setValue("yMotorEnd", ui->yAxis->ui->end->value());
   localSettings->setValue("yMotorPoints", ui->yAxis->ui->points->value());
@@ -431,8 +431,8 @@ void MainWindow::startStop(){
 void MainWindow::stopScan(){
     stopNow=true;
     if (nowScanning()) {
-      ui->xAxis->motor->stop();
-      ui->yAxis->motor->stop();
+      ui->xAxis->motor->motor()->stop();
+      ui->yAxis->motor->motor()->stop();
     }
 }
 
@@ -555,20 +555,20 @@ void MainWindow::startScan(){
   yAxisData.resize(yPoints);
 
   dataStr
-      << "# X axis PV: \"" << ui->xAxis->motor->getPv() << "\"\n"
-      << "# X axis Description: \"" << ui->xAxis->motor->getDescription() << "\"\n"
+      << "# X axis PV: \"" << ui->xAxis->motor->motor()->getPv() << "\"\n"
+      << "# X axis Description: \"" << ui->xAxis->motor->motor()->getDescription() << "\"\n"
       << "#\n";
   if ( ui->scan2D->isChecked() )
     dataStr
-        << "# Y axis PV: \"" << ui->yAxis->motor->getPv() << "\"\n"
-        << "# Y axis Description: \"" << ui->yAxis->motor->getDescription() << "\"\n"
+        << "# Y axis PV: \"" << ui->yAxis->motor->motor()->getPv() << "\"\n"
+        << "# Y axis Description: \"" << ui->yAxis->motor->motor()->getDescription() << "\"\n"
         << "#\n";
 
 
   // get initial positions
-  const double xInitPos = ui->xAxis->motor->getUserPosition();
+  const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
   const double yInitPos = ui->scan2D->isChecked() ?
-                          ui->yAxis->motor->getUserPosition()  :  0 ;
+                          ui->yAxis->motor->motor()->getUserPosition()  :  0 ;
 
 
   dataStr << "# Initial position of X axis: " << xInitPos << "\n";
@@ -657,11 +657,11 @@ void MainWindow::startScan(){
   for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ ) {
 
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->goUserPosition( yAxisData[ypoint] , true );
-    if ( ui->yAxis->motor->getLoLimitStatus() ||
-         ui->yAxis->motor->getHiLimitStatus() )
+      ui->yAxis->motor->motor()->goUserPosition( yAxisData[ypoint] , true );
+    if ( ui->yAxis->motor->motor()->getLoLimitStatus() ||
+         ui->yAxis->motor->motor()->getHiLimitStatus() )
       dataStr <<  "# Y Axis: limit hit.\n";
-    double yPos = ui->yAxis->motor->getUserPosition();
+    double yPos = ui->yAxis->motor->motor()->getUserPosition();
 
     updateGUI();
     if ( stopNow )
@@ -674,10 +674,10 @@ void MainWindow::startScan(){
                                            new QTableWidgetItem(QString::number(curpoint+1)));
       ui->dataTable->scrollToBottom();
 
-      ui->xAxis->motor->goUserPosition( xAxisData[xpoint] , true );
-      double xPos = ui->xAxis->motor->getUserPosition();
-      if ( ui->xAxis->motor->getLoLimitStatus() ||
-           ui->xAxis->motor->getHiLimitStatus() )
+      ui->xAxis->motor->motor()->goUserPosition( xAxisData[xpoint] , true );
+      double xPos = ui->xAxis->motor->motor()->getUserPosition();
+      if ( ui->xAxis->motor->motor()->getLoLimitStatus() ||
+           ui->xAxis->motor->motor()->getHiLimitStatus() )
         dataStr <<  "# X Axis: limit hit.\n";
 
       updateGUI();
@@ -728,13 +728,13 @@ void MainWindow::startScan(){
 
   // after scan positioning
   if ( ui->after->currentText() == "Start position" ) {
-    ui->xAxis->motor->goUserPosition(xStart, true);
+    ui->xAxis->motor->motor()->goUserPosition(xStart, true);
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->goUserPosition(yStart);
+      ui->yAxis->motor->motor()->goUserPosition(yStart);
   } else if ( ui->after->currentText() == "Prior position" ) {
-    ui->xAxis->motor->goUserPosition(xInitPos, true);
+    ui->xAxis->motor->motor()->goUserPosition(xInitPos, true);
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->goUserPosition(yInitPos);
+      ui->yAxis->motor->motor()->goUserPosition(yInitPos);
   }
 
 

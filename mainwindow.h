@@ -14,6 +14,7 @@
 #include <QMdiSubWindow>
 #include <QMenu>
 #include <QProcess>
+#include <QComboBox>
 
 #include <qcamotorgui.h>
 

@@ -1,4 +1,5 @@
 #include "axis.h"
+#include <QPushButton>
 
 const QString Axis::badStyle = "background-color: rgba(255, 0, 0, 64);";
 const QString Axis::goodStyle = QString();
@@ -7,23 +8,23 @@ const QString Axis::goodStyle = QString();
 Axis::Axis(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::axis),
-    motor(new QCaMotorGUI(this))
+    motor(new QCaMotorGUI)
 {
   ui->setupUi(this);
-  ui->setupPlace->insertWidget(0, motor->basicUI()->setup);
+  ui->setupPlace->insertWidget(0, motor->setupButton());
 
-  connect(motor, SIGNAL(changedConnected(bool)), SLOT(setConnected(bool)));
-  connect(motor, SIGNAL(changedMoving(bool)), SIGNAL(statusChanged()));
-  connect(motor, SIGNAL(changedUserLoLimit(double)),  ui->start, SLOT(setMin(double)));
-  connect(motor, SIGNAL(changedUserHiLimit(double)),  ui->start, SLOT(setMax(double)));
-  connect(motor, SIGNAL(changedUserLoLimit(double)),  ui->end, SLOT(setMin(double)));
-  connect(motor, SIGNAL(changedUserHiLimit(double)),  ui->end, SLOT(setMax(double)));
-  connect(motor, SIGNAL(changedPrecision(int)),       ui->end, SLOT(setPrec(int)));
-  connect(motor, SIGNAL(changedPrecision(int)),       ui->step, SLOT(setPrec(int)));
-  connect(motor, SIGNAL(changedPrecision(int)),       ui->width, SLOT(setPrec(int)));
-  connect(motor, SIGNAL(changedPrecision(int)),       ui->start, SLOT(setPrec(int)));
-  connect(motor, SIGNAL(changedLoLimitStatus(bool)), SLOT(updateLimits()));
-  connect(motor, SIGNAL(changedHiLimitStatus(bool)), SLOT(updateLimits()));
+  connect(motor->motor(), SIGNAL(changedConnected(bool)), SLOT(setConnected(bool)));
+  connect(motor->motor(), SIGNAL(changedMoving(bool)), SIGNAL(statusChanged()));
+  connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->start, SLOT(setMin(double)));
+  connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->start, SLOT(setMax(double)));
+  connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->end, SLOT(setMin(double)));
+  connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->end, SLOT(setMax(double)));
+  connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->end, SLOT(setPrec(int)));
+  connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->step, SLOT(setPrec(int)));
+  connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->width, SLOT(setPrec(int)));
+  connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->start, SLOT(setPrec(int)));
+  connect(motor->motor(), SIGNAL(changedLoLimitStatus(bool)), SLOT(updateLimits()));
+  connect(motor->motor(), SIGNAL(changedHiLimitStatus(bool)), SLOT(updateLimits()));
   connect(motor, SIGNAL(ioPositionChanged(QString)),
           ui->val, SLOT(setText(QString)));
 
@@ -42,7 +43,7 @@ Axis::Axis(QWidget *parent) :
 
 
 void Axis::setConnected(bool con) {
-  motor->basicUI()->setup->setStyleSheet( con ?  goodStyle : badStyle );
+  motor->setupButton()->setStyleSheet( con ?  goodStyle : badStyle );
   if ( ! con )
     ui->val->setText("disconnected");
   positionsAcceptable();
@@ -50,7 +51,7 @@ void Axis::setConnected(bool con) {
 }
 
 void Axis::updateLimits(){
-  if ( motor->getLoLimitStatus() || motor->getHiLimitStatus() ) {
+  if ( motor->motor()->getLoLimitStatus() || motor->motor()->getHiLimitStatus() ) {
     ui->val->setStyleSheet("background-color: rgb(128, 0, 0); color: rgb(255, 255, 255);");
     emit limitReached();
   } else {
@@ -60,9 +61,9 @@ void Axis::updateLimits(){
 
 inline bool Axis::positionAcceptable(double pos) {
   return
-      motor->isConnected() &&
-      pos >= motor->getUserLoLimit() &&
-      pos <= motor->getUserHiLimit();
+      motor->motor()->isConnected() &&
+      pos >= motor->motor()->getUserLoLimit() &&
+      pos <= motor->motor()->getUserHiLimit();
 }
 
 
@@ -121,7 +122,7 @@ void Axis::pointsCh(int val){
 
 
 bool Axis::isReady() {
-  return motor->isConnected()
-      && ! motor->isMoving()
+  return motor->motor()->isConnected()
+      && ! motor->motor()->isMoving()
       && positionsAcceptable();
 }
