@@ -13,14 +13,13 @@ const QString MainWindow::badStyle = "background-color: rgba(255, 0, 0, 64);";
 const QString MainWindow::goodStyle = QString();
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)  {
+  QMainWindow(parent),
+  ui(new Ui::MainWindow),
+  nowLoading(true)
+{
 
   ui->setupUi(this);
-  ui->tabwin->hide();
   connect(ui->addSignal, SIGNAL(clicked()), SLOT(addSignal()));
-  connect(ui->addTrigger, SIGNAL(clicked()), SLOT(addTrigger()));
-  connect(ui->triggAll, SIGNAL(clicked()), SLOT(trigAll()));
   connect(ui->startStop, SIGNAL(clicked()), SLOT(startStop()));
   connect(ui->browseSaveDir, SIGNAL(clicked()), SLOT(browseAutoSave()));
   connect(ui->printResult, SIGNAL(clicked()), SLOT(printResult()));
@@ -30,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->saveDir, SIGNAL(textChanged(QString)), SLOT(prepareAutoSave()));
   connect(ui->saveName, SIGNAL(textChanged(QString)), SLOT(prepareAutoSave()));
   connect(ui->autoName, SIGNAL(toggled(bool)), SLOT(prepareAutoSave()));
-  connect(ui->tabwin, SIGNAL(clicked()), SLOT(changeWinmode()));
 
   connect(ui->xAxis, SIGNAL(statusChanged()), SLOT(checkReady()));
   connect(ui->yAxis, SIGNAL(statusChanged()), SLOT(checkReady()));
@@ -50,12 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
   int size = globalSettings->beginReadArray("detectors");
   for (int i = 0; i < size; ++i) {
     globalSettings->setArrayIndex(i);
-    QString
-        sigPV = globalSettings->value("detector").toString(),
-        trigPV = globalSettings->value("trigger").toString(),
-        trigval = globalSettings->value("triggerValue").toString();
-
-    knownDeTrig.insert(sigPV, qMakePair(trigPV, trigval));
+    QString sigPV = globalSettings->value("detector").toString();
     Signal::knownDetectors.append(sigPV);
   }
   globalSettings->endArray();
@@ -149,13 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
   if ( localSettings->contains("autoName") )
     ui->autoName->setChecked( localSettings->value("autoName").toBool() );
 
-  size = localSettings->beginReadArray("triggers");
-  for (int i = 0; i < size; ++i) {
-    localSettings->setArrayIndex(i);
-    addTrigger(localSettings->value("trigger").toString(),
-               localSettings->value("value").toString());
-  }
-  localSettings->endArray();
+  updatePlots();
 
   size = localSettings->beginReadArray("detectors");
   for (int i = 0; i < size; ++i) {
@@ -164,21 +151,77 @@ MainWindow::MainWindow(QWidget *parent) :
   }
   localSettings->endArray();
 
+  connect(ui->xAxis, SIGNAL(settingChanged()), SLOT(updatePlots()));
   connect(ui->xAxis, SIGNAL(settingChanged()), SLOT(storeSettings()));
   connect(ui->xAxis->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(ui->yAxis, SIGNAL(settingChanged()), SLOT(updatePlots()));
   connect(ui->yAxis, SIGNAL(settingChanged()), SLOT(storeSettings()));
   connect(ui->yAxis->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(ui->scan2D, SIGNAL(toggled(bool)), SLOT(updatePlots()));
   connect(ui->scan2D, SIGNAL(toggled(bool)), SLOT(storeSettings()));
   connect(ui->after, SIGNAL(activated(QString)), SLOT(storeSettings()));
   connect(ui->saveDir, SIGNAL(editingFinished()), SLOT(storeSettings()));
   connect(ui->saveName, SIGNAL(editingFinished()), SLOT(storeSettings()));
   connect(ui->autoName, SIGNAL(toggled(bool)), SLOT(storeSettings()));
 
+  nowLoading = false;
+
 }
 
 
+void MainWindow::updatePlots() {
+
+  const int xPoints = ui->xAxis->points();
+  xAxisData.resize(xPoints);
+
+  double xStart = ui->xAxis->start();
+  double xEnd = ui->xAxis->end();
+  if (ui->xAxis->mode() == Axis::REL) {
+    const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
+    xStart += xInitPos;
+    xEnd += xInitPos;
+  }
+
+  for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ )
+    xAxisData(xpoint) = xStart + ( xpoint * ( xEnd - xStart ) ) / (xPoints - 1);
+
+  if ( ! ui->scan2D->isChecked() ) { // 2D
+    yAxisData.resize(1);
+    yAxisData=0;
+    foreach (Signal * sig, signalsE)
+      sig->setData(&xAxisData);
+  } else { // 3D
+
+    const int yPoints = ui->yAxis->points();
+    yAxisData.resize(yPoints);
+
+    double yStart = ui->yAxis->start();
+    double yEnd = ui->yAxis->end();
+    if (ui->yAxis->mode() == Axis::REL) {
+      const double yInitPos = ui->yAxis->motor->motor()->getUserPosition();
+      yStart += yInitPos;
+      yEnd += yInitPos;
+    }
+
+    for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ )
+      yAxisData(ypoint) = yStart + ( ypoint * ( yEnd - yStart ) ) / (yPoints - 1);
+
+    foreach (Signal * sig, signalsE)
+      sig->setData(xPoints, yPoints, xStart, xEnd, yStart, yEnd);
+
+  }
+
+  updateGUI();
+
+}
+
 
 void MainWindow::storeSettings() {
+
+  if (nowLoading)
+    return;
+
+  localSettings->clear();
 
   localSettings->setValue("xMotor", ui->xAxis->motor->motor()->getPv());
   localSettings->setValue("xMotorStart", ui->xAxis->ui->start->value());
@@ -195,14 +238,6 @@ void MainWindow::storeSettings() {
   localSettings->setValue("saveDir", ui->saveDir->text());
   localSettings->setValue("saveName", ui->saveName->text());
   localSettings->setValue("autoName", ui->autoName->isChecked());
-
-  localSettings->beginWriteArray("triggers");
-  for (int i = 0; i < triggersE.size(); ++i) {
-    localSettings->setArrayIndex(i);
-    localSettings->setValue("trigger", triggersE[i]->trig->text());
-    localSettings->setValue("value", triggersE[i]->val->text());
-  }
-  localSettings->endArray();
 
   localSettings->beginWriteArray("detectors");
   for (int i = 0; i < signalsE.size(); ++i) {
@@ -266,7 +301,7 @@ void MainWindow::printResult(){
   if ( dialog.exec() )
     foreach(Signal* sig, signalsE)
       if (active == sig->plotWin)
-        sig->graph->plot->print(printer);
+        sig->print(printer);
 
 }
 
@@ -285,54 +320,11 @@ void MainWindow::saveResult(){
 void MainWindow::checkReady(){
   bool iAmReady = ui->xAxis->isReady() ;
   iAmReady = iAmReady && ( ! ui->scan2D->isChecked() || ui->yAxis->isReady() );
-  foreach(Trigger* trig, triggersE)
-    iAmReady = iAmReady && trig->pv->isConnected();
-  foreach(Signal* sig, signalsE)
-    iAmReady = iAmReady && sig->isConnected();
   iAmReady = iAmReady && signalsE.size();
   iAmReady = iAmReady
-             && ( ui->saveDir->styleSheet() == goodStyle )
-             && ( ui->saveName->styleSheet() == goodStyle );
-
+      && ( ui->saveDir->styleSheet() == goodStyle )
+      && ( ui->saveName->styleSheet() == goodStyle );
   ui->startStop->setEnabled(iAmReady || nowScanning() );
-}
-
-void MainWindow::constructTriggersLayout(){
-  ui->triggersList->setVisible(triggersE.size());
-  foreach(Trigger * tr, triggersE){
-    int position = triggersE.indexOf(tr) + 1;
-    ui->triggersL->addWidget(tr->rem,   position, 0);
-    ui->triggersL->addWidget(tr->trig,    position, 1);
-    ui->triggersL->addWidget(tr->val,   position, 2);
-  }
-  storeSettings();
-}
-
-void MainWindow::addTrigger(const QString & pvName, const QString & value){
-  Trigger * tr = new Trigger(this);
-  tr->trig->setText(pvName);
-  tr->val->setText(value);
-  connect(tr, SIGNAL(remove()), this, SLOT(removeTrigger()));
-  connect(tr->pv, SIGNAL(connectionChanged(bool)), SLOT(checkReady()));
-  triggersE.append(tr);
-  constructTriggersLayout();
-}
-
-void MainWindow::removeTrigger(){
-  Trigger * tr = (Trigger *) sender();
-  triggersE.removeOne(tr);
-  delete tr;
-  constructTriggersLayout();
-}
-
-
-bool MainWindow::triggersContains(const QString & trigPV, const QString & trigval){
-  bool found = false;
-  foreach (Trigger * trig, triggersE)
-    found = found ||
-            ( ( trig->trig->text() == trigPV ) &&
-              ( trigval.isEmpty() || ( trig->val->text() == trigval ) ) );
-  return found;
 }
 
 void MainWindow::constructSignalsLayout(){
@@ -360,11 +352,34 @@ void MainWindow::addSignal(const QString & pvName){
   sg->sig->addItem(pvName);
   sg->sig->setCurrentIndex( sg->sig->findText(pvName) );
 
-  connect(sg, SIGNAL(remove()), this, SLOT(removeSignal()));
-  connect(sg, SIGNAL(connectionChanged(bool)), SLOT(checkReady()));
-  connect(sg->sig, SIGNAL(currentIndexChanged(QString)), SLOT(updateSignal(QString)));
+  connect(sg->rem, SIGNAL(clicked()), this, SLOT(removeSignal()));
+  connect(sg->sig, SIGNAL(editTextChanged(QString)), SLOT(storeSettings()));
 
-  ui->plots->addSubWindow(sg->plotWin) -> show();
+  if ( ! ui->scan2D->isChecked() ) { // 2D
+    sg->setData(&xAxisData);
+  } else { // 3D
+
+    double xStart = ui->xAxis->start();
+    double xEnd = ui->xAxis->end();
+    if (ui->xAxis->mode() == Axis::REL) {
+      const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
+      xStart += xInitPos;
+      xEnd += xInitPos;
+    }
+
+    double yStart = ui->yAxis->start();
+    double yEnd = ui->yAxis->end();
+    if (ui->yAxis->mode() == Axis::REL) {
+      const double yInitPos = ui->yAxis->motor->motor()->getUserPosition();
+      yStart += yInitPos;
+      yEnd += yInitPos;
+    }
+
+    sg->setData(xAxisData.size(), yAxisData.size(), xStart, xEnd, yStart, yEnd);
+
+  }
+
+  ui->plots->addSubWindow(sg->plotWin)->showMaximized();
 
 
   sg->tableItem = new QTableWidgetItem(pvName);
@@ -377,20 +392,19 @@ void MainWindow::addSignal(const QString & pvName){
 
 }
 
-void MainWindow::updateSignal(QString pvName){
-  if ( knownDeTrig.contains(pvName) &&
-       ! knownDeTrig[pvName].first.isEmpty() &&
-       ! triggersContains(knownDeTrig[pvName].first, knownDeTrig[pvName].second)
-       )
-    addTrigger(knownDeTrig[pvName].first, knownDeTrig[pvName].second);
-}
-
-
 void MainWindow::removeSignal(){
-  Signal * sg = (Signal *) sender();
+
+  Signal * sg=0;
+  foreach(Signal * sig, signalsE)
+    if (sig->rem == sender())
+      sg = sig;
+  if (!sg)
+    return;
+
+
   ui->dataTable->removeColumn(column(sg));
-  ui->plots->removeSubWindow(sg->plotWin);
   signalsE.removeOne(sg);
+  storeSettings();
   delete sg;
   constructSignalsLayout();
 
@@ -446,10 +460,6 @@ bool MainWindow::nowScanning() {
   return ! ui->setup->isEnabled();
 }
 
-void MainWindow::trigAll(){
-  foreach(Trigger * trig, triggersE)
-    trig->trigMe();
-}
 
 void MainWindow::openQti() {
   if (qtiCommand.isEmpty())
@@ -481,19 +491,6 @@ void MainWindow::openQti() {
 
 
 
-void MainWindow::changeWinmode(){
-  if ( ui->plots->viewMode() == QMdiArea::SubWindowView ) {
-    ui->plots->setViewMode(QMdiArea::TabbedView);
-    ui->tabwin->setText("Window view");
-  } else {
-    ui->plots->setViewMode(QMdiArea::SubWindowView);
-    ui->tabwin->setText("Tab view");
-  }
-}
-
-
-
-
 
 
 
@@ -512,6 +509,8 @@ void MainWindow::startScan(){
     return;
 
   stopNow = false;
+
+  updatePlots();
 
   ui->setup->setEnabled(false);
   ui->startStop->setText("Stop");
@@ -534,11 +533,9 @@ void MainWindow::startScan(){
       << "# Time: " << QTime::currentTime().toString() << "\n"
       << "#\n";
 
-
   //sizes
-  const int xPoints = ui->xAxis->points();
-  const int yPoints = ui->scan2D->isChecked() ?
-                      ui->yAxis->points()  :  1 ;
+  const int xPoints = xAxisData.size();
+  const int yPoints = yAxisData.size();
   const int totalPoints = xPoints * yPoints;
 
   dataStr
@@ -550,9 +547,6 @@ void MainWindow::startScan(){
         << "# Number of Y axis points: " << yPoints << "\n"
         << "#\n";
   dataStr << "#\n";
-
-  xAxisData.resize(xPoints);
-  yAxisData.resize(yPoints);
 
   dataStr
       << "# X axis PV: \"" << ui->xAxis->motor->motor()->getPv() << "\"\n"
@@ -578,60 +572,21 @@ void MainWindow::startScan(){
 
 
   // actual starting positions
-  const double xStart = ui->xAxis->start() +
-                        ( ui->xAxis->mode() == Axis::REL  ?
-                        xInitPos  :  0 ) ;
-  const double yStart = ui->yAxis->start() +
-                        ( ui->yAxis->mode() == Axis::REL  ?
-                        yInitPos  :  0 ) ;
-  const double xEnd = ui->xAxis->end() +
-                        ( ui->xAxis->mode() == Axis::REL ?
-                        xInitPos  :  0 ) ;
-  const double yEnd = ui->yAxis->end() +
-                        ( ui->yAxis->mode() == Axis::REL ?
-                        yInitPos  :  0 ) ;
+  const double xStart = xAxisData(0);
+  const double yStart = yAxisData(0);
+  const double xEnd = xAxisData(xPoints-1) ;
+  const double yEnd = yAxisData(yPoints-1) ;;
 
   dataStr << "# X axis scan range: " << xStart << " ... " << xEnd << "\n";
   if ( ui->scan2D->isChecked() )
     dataStr << "# Y axis scan range: " << yStart << " ... " << yEnd << "\n";
-  dataStr << "#\n";
-
-  // resize data storage(s) and set initial values
-  foreach (Signal * sig, signalsE) {
-    if ( ui->scan2D->isChecked() )
-      sig->graph->changePlot( xPoints, xStart, xEnd,
-                       yPoints, yStart, yEnd );
-    else
-      sig->graph->changePlot( xPoints, xStart, xEnd );
-  }
-  updateGUI();
-
-  dataStr
-      << "# Signals:\n"
-      << "#\n";
+  dataStr << "#\n"
+          << "# Signals:\n"
+          << "#\n";
   foreach (Signal * sig, signalsE)
     dataStr
         << "# PV: \"" << sig->pv->pv() << "\"\n";
   dataStr << "#\n";
-
-  if ( triggersE.size() ) {
-    dataStr
-        << "# Triggers:\n"
-        << "#\n";
-    foreach (Trigger * trig, triggersE)
-      dataStr
-          << "# PV: \"" << trig->pv->pv() << "\"\n";
-    dataStr << "#\n";
-  }
-
-
-  // set axis positions
-  for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ )
-    xAxisData[xpoint] = xStart + ( xpoint * ( xEnd - xStart ) ) / (xPoints - 1);
-  for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ )
-    yAxisData[ypoint] = ui->scan2D->isChecked() ?
-                        yStart + ( ypoint * ( yEnd - yStart ) ) / (yPoints - 1) :
-                        0;
 
   // reset progress
   ui->dataTable->setRowCount(0);
@@ -657,7 +612,7 @@ void MainWindow::startScan(){
   for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ ) {
 
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition( yAxisData[ypoint] , true );
+      ui->yAxis->motor->motor()->goUserPosition( yAxisData(ypoint) , true );
     if ( ui->yAxis->motor->motor()->getLoLimitStatus() ||
          ui->yAxis->motor->motor()->getHiLimitStatus() )
       dataStr <<  "# Y Axis: limit hit.\n";
@@ -674,7 +629,7 @@ void MainWindow::startScan(){
                                            new QTableWidgetItem(QString::number(curpoint+1)));
       ui->dataTable->scrollToBottom();
 
-      ui->xAxis->motor->motor()->goUserPosition( xAxisData[xpoint] , true );
+      ui->xAxis->motor->motor()->goUserPosition( xAxisData(xpoint) , true );
       double xPos = ui->xAxis->motor->motor()->getUserPosition();
       if ( ui->xAxis->motor->motor()->getLoLimitStatus() ||
            ui->xAxis->motor->motor()->getHiLimitStatus() )
@@ -695,16 +650,14 @@ void MainWindow::startScan(){
           << QString::number(xPos, 'e') << " "
           << ( ui->scan2D->isChecked() ? QString::number(yPos, 'e') + " " : "" );
 
-      foreach(Signal * sig, signalsE)
-        sig->needUpdated();
-      trigAll();
       updateGUI();
+      foreach(Signal * sig, signalsE)
+        sig->pv->needUpdated();
       foreach(Signal * sig, signalsE) {
-        double value = sig->getUpdated(curpoint);
+        double value = sig->get(curpoint);
         ui->dataTable->setItem(curpoint, column(sig) ,
                                new QTableWidgetItem(QString::number(value)));
         dataStr << QString::number(value, 'e') << " ";
-        sig->graph->plot->replot();
       }
 
       dataStr <<  "\n";
@@ -763,20 +716,14 @@ CloseFilter * MainWindow::Signal::closeFilt = new CloseFilter;
 QStringList MainWindow::Signal::knownDetectors = QStringList();
 
 MainWindow::Signal::Signal(QWidget* parent) :
-
-    rem(new QPushButton("-", parent)),
-    sig(new QComboBox(parent)),
-    val(new QLabel(parent)),
-    tableItem(new QTableWidgetItem()),
-    plotWin(new QMdiSubWindow(parent)),
-
-    pv(new QEpicsPv(this)),
-
-    graph(new Graph)
-
+  rem(new QPushButton("-", parent)),
+  sig(new QComboBox(parent)),
+  val(new QLabel(parent)),
+  tableItem(new QTableWidgetItem()),
+  plotWin(new QMdiSubWindow(parent)),
+  pv(new QEpicsPv(this)),
+  graph(new Graph)
 {
-
-  setConnected(false);
 
   sig->setEditable(true);
   sig->setDuplicatesEnabled(false);
@@ -789,13 +736,10 @@ MainWindow::Signal::Signal(QWidget* parent) :
 
   connect(sig, SIGNAL(editTextChanged(QString)), pv, SLOT(setPV(QString)));
   connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setHeader(QString)));
-  connect(pv, SIGNAL(connectionChanged(bool)), SLOT(setConnected(bool)));
   connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
-  connect(rem, SIGNAL(clicked()), SIGNAL(remove()));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
-  plotWin->showMaximized();
   QIcon icon;
   icon.addFile(":/new/prefix1/Graph1-small.png", QSize(), QIcon::Normal, QIcon::Off);
   plotWin->setWindowIcon(icon);
@@ -808,32 +752,44 @@ MainWindow::Signal::~Signal() {
   delete rem;
   delete sig;
   delete val;
+  delete graph;
   delete plotWin;
 };
 
-
-double MainWindow::Signal::getUpdated(int point) {
-  QVariant ret = pv->getUpdated();
-  if ( ! ret.isValid() )
-    ret = pv->get();
-  return graph->newData(point, ret.toDouble());
+double MainWindow::Signal::get(int pos) {
+  double rval = pv->getUpdated().toDouble();
+  if ( pos >= 0 && pos < data.size() ) {
+    data(pos) = rval;
+    graph->updateData(rval);
+  }
+  return rval;
 }
 
-double MainWindow::Signal::get(int point) {
-  return graph->newData(point, pv->get().toDouble());
+void MainWindow::Signal::setData(Line * xData) {
+  point = 0;
+  data.resize(xData->size());
+  data=NAN;
+  for (int idx=0; idx < data.size()*3/4 ; idx++)
+    data(idx) = idx;
+  graph->changePlot(xData->data(), data.data(), xData->size());
 }
 
-void MainWindow::Signal::setConnected(bool con) {
-  rem->setStyleSheet( con ? "" :
-                      "background-color: rgba(255, 0, 0,64);");
-  val->setText( con ? "" : "disconnected");
-  emit connectionChanged(con);
+void MainWindow::Signal::setData(int width, int height,
+                    double xStart, double xEnd,
+                    double yStart, double yEnd) {
+  point = 0;
+  data.resize(width*height);
+  data=NAN;
+  for (int idx=0; idx < data.size()*3/4 ; idx++)
+    data(idx) = idx;
+  graph->changePlot(data.data(), width, height, xStart, xEnd, yStart, yEnd);
 }
+
 
 void MainWindow::Signal::setHeader(const QString & text) {
   tableItem->setText(text);
   plotWin->setWindowTitle(text);
-  graph->plot->setTitle(text);
+  graph->setTitle(text);
 }
 
 

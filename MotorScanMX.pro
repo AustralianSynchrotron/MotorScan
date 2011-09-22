@@ -3,13 +3,11 @@
 # -------------------------------------------------
 TARGET = MotorScanMX
 TEMPLATE = app
+CONFIG += qwt
 SOURCES += main.cpp \
     mainwindow.cpp \
     axis.cpp \
     graph.cpp
-INCLUDEPATH += /usr/include/qwt-qt4 \
-    /usr/local/include/qwt5 \
-    /usr/include/qwt5/
 HEADERS += mainwindow.h \
     axis.h \
     graph.h
@@ -17,8 +15,7 @@ FORMS += mainwindow.ui \
     axis.ui \
     graph.ui
 RESOURCES = scanmx.qrc
-LIBS += -lqcamotorgui \
-    -lqwt
+LIBS += -lqcamotorgui
 target.files = $$[TARGET]
 target.path = $$[INSTALLBASE]/bin
 INSTALLS += target
