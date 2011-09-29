@@ -135,7 +135,7 @@ public:
 
   inline void print(QPrinter & printer) {graph->print(printer);}
 
-  double get(int pos=-1);
+  QVariant get(int pos=-1);
 
 private slots:
 

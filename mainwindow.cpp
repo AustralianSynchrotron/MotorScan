@@ -629,11 +629,15 @@ void MainWindow::startScan(){
                                            new QTableWidgetItem(QString::number(curpoint+1)));
       ui->dataTable->scrollToBottom();
 
+      //qDebug() << ui->xAxis->motor->motor()->getUserPosition() << xAxisData(xpoint);
       ui->xAxis->motor->motor()->goUserPosition( xAxisData(xpoint) , true );
+      qtWait(100); // let it update the position
       double xPos = ui->xAxis->motor->motor()->getUserPosition();
       if ( ui->xAxis->motor->motor()->getLoLimitStatus() ||
            ui->xAxis->motor->motor()->getHiLimitStatus() )
         dataStr <<  "# X Axis: limit hit.\n";
+      if ( ! ui->scan2D->isChecked() )
+        xAxisData(xpoint) = xPos;
 
       updateGUI();
       if ( stopNow )
@@ -654,10 +658,10 @@ void MainWindow::startScan(){
       foreach(Signal * sig, signalsE)
         sig->pv->needUpdated();
       foreach(Signal * sig, signalsE) {
-        double value = sig->get(curpoint);
-        ui->dataTable->setItem(curpoint, column(sig) ,
-                               new QTableWidgetItem(QString::number(value)));
-        dataStr << QString::number(value, 'e') << " ";
+        QString strval = sig->get(curpoint).toString();
+        ui->dataTable->setItem(curpoint, column(sig),
+                               new QTableWidgetItem(strval));
+        dataStr << strval << " ";
       }
 
       dataStr <<  "\n";
@@ -756,21 +760,29 @@ MainWindow::Signal::~Signal() {
   delete plotWin;
 };
 
-double MainWindow::Signal::get(int pos) {
-  double rval = pv->getUpdated().toDouble();
+QVariant MainWindow::Signal::get(int pos) {
+
+  if ( ! pv->isConnected() )
+    return QVariant();
+
+  QVariant val = pv->getUpdated();
+  if ( ! val.isValid() )
+    val = pv->get();
+
+  double rval = val.toDouble();
   if ( pos >= 0 && pos < data.size() ) {
     data(pos) = rval;
     graph->updateData(rval);
   }
-  return rval;
+
+  return val;
+
 }
 
 void MainWindow::Signal::setData(Line * xData) {
   point = 0;
   data.resize(xData->size());
   data=NAN;
-  for (int idx=0; idx < data.size()*3/4 ; idx++)
-    data(idx) = idx;
   graph->changePlot(xData->data(), data.data(), xData->size());
 }
 
@@ -780,8 +792,6 @@ void MainWindow::Signal::setData(int width, int height,
   point = 0;
   data.resize(width*height);
   data=NAN;
-  for (int idx=0; idx < data.size()*3/4 ; idx++)
-    data(idx) = idx;
   graph->changePlot(data.data(), width, height, xStart, xEnd, yStart, yEnd);
 }
 
