@@ -14,8 +14,8 @@
    <string>MotorScanMX</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>Graph1-small.png</normaloff>Graph1-small.png</iconset>
+   <iconset resource="scanmx.qrc">
+    <normaloff>:/new/prefix1/Graph1-small.png</normaloff>:/new/prefix1/Graph1-small.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -467,7 +467,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="scanmx.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>scan2D</sender>
