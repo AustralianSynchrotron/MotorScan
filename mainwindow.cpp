@@ -299,7 +299,7 @@ QString MainWindow::prepareAutoSave() {
 void MainWindow::printResult(){
   QPrinter printer;
   QPrintDialog dialog(&printer);
-  QMdiSubWindow  * active = ui->plots->activeSubWindow();
+  QMdiSubWindow  * active =ui->plots->subWindowList(QMdiArea::ActivationHistoryOrder).last();
   if ( dialog.exec() )
     foreach(Signal* sig, signalsE)
       if (active == sig->plotWin)
@@ -525,7 +525,6 @@ void MainWindow::startScan(){
 
   // buttons
   ui->saveResult->setEnabled(true);
-  ui->printResult->setEnabled(true);
   ui->qtiResults->setEnabled(true);
 
   dataStr

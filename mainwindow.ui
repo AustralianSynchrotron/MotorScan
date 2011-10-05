@@ -133,8 +133,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>306</width>
-             <height>748</height>
+             <width>254</width>
+             <height>755</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -389,9 +389,6 @@
            </property>
            <item>
             <widget class="QPushButton" name="printResult">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="toolTip">
               <string>Print the plot.</string>
              </property>
