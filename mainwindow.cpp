@@ -44,14 +44,16 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->qtiResults->setVisible( ! qtiCommand.isEmpty() );
 
   // Restore global settings
-
-  int size = globalSettings->beginReadArray("detectors");
-  for (int i = 0; i < size; ++i) {
-    globalSettings->setArrayIndex(i);
-    QString sigPV = globalSettings->value("detector").toString();
-    Signal::knownDetectors.append(sigPV);
-  }
-  globalSettings->endArray();
+  Signal::knownDetectors.clear();
+  QFile detFile("/etc/listOfSignals.txt");
+  if ( detFile.open(QIODevice::ReadOnly | QIODevice::Text) &&
+       detFile.isReadable() )
+    while ( !detFile.atEnd() ) {
+      QString ln = detFile.readLine();
+      if ( ln.at(ln.length()-1) == '\n')
+        ln.chop(1);
+      Signal::knownDetectors << ln;
+    }
 
 
   // Restore local settings
@@ -144,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   updatePlots();
 
-  size = localSettings->beginReadArray("detectors");
+  int size = localSettings->beginReadArray("detectors");
   for (int i = 0; i < size; ++i) {
     localSettings->setArrayIndex(i);
     addSignal(localSettings->value("detector").toString());
@@ -297,7 +299,7 @@ QString MainWindow::prepareAutoSave() {
 void MainWindow::printResult(){
   QPrinter printer;
   QPrintDialog dialog(&printer);
-  QMdiSubWindow  * active = ui->plots->activeSubWindow();
+  QMdiSubWindow  * active =ui->plots->subWindowList(QMdiArea::ActivationHistoryOrder).last();
   if ( dialog.exec() )
     foreach(Signal* sig, signalsE)
       if (active == sig->plotWin)
@@ -523,7 +525,6 @@ void MainWindow::startScan(){
 
   // buttons
   ui->saveResult->setEnabled(true);
-  ui->printResult->setEnabled(true);
   ui->qtiResults->setEnabled(true);
 
   dataStr
