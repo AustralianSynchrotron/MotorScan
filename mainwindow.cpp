@@ -575,7 +575,7 @@ void MainWindow::startScan(){
   const double xStart = xAxisData(0);
   const double yStart = yAxisData(0);
   const double xEnd = xAxisData(xPoints-1) ;
-  const double yEnd = yAxisData(yPoints-1) ;;
+  const double yEnd = yAxisData(yPoints-1) ;
 
   dataStr << "# X axis scan range: " << xStart << " ... " << xEnd << "\n";
   if ( ui->scan2D->isChecked() )
