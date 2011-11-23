@@ -49,7 +49,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="min">
+      <widget class="QMDoubleSpinBox" name="min">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -101,7 +101,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="max">
+      <widget class="QMDoubleSpinBox" name="max">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -146,6 +146,15 @@
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QMDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header location="global">qtpvwidgets.h</header>
+   <slots>
+    <signal>valueEdited(double)</signal>
+    <signal>escaped()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>

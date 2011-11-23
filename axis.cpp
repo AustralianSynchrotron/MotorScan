@@ -59,7 +59,7 @@ void Axis::updateLimits(){
   }
 }
 
-inline bool Axis::positionAcceptable(double pos) {
+bool Axis::positionAcceptable(double pos) {
   return
       motor->motor()->isConnected() &&
       pos >= motor->motor()->getUserLoLimit() &&

@@ -613,7 +613,7 @@ void MainWindow::startScan(){
   for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ ) {
 
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition( yAxisData(ypoint) , true );
+      ui->yAxis->motor->motor()->goUserPosition( yAxisData(ypoint) , QCaMotor::STOPPED );
     if ( ui->yAxis->motor->motor()->getLoLimitStatus() ||
          ui->yAxis->motor->motor()->getHiLimitStatus() )
       dataStr <<  "# Y Axis: limit hit.\n";
@@ -631,7 +631,7 @@ void MainWindow::startScan(){
       ui->dataTable->scrollToBottom();
 
       //qDebug() << ui->xAxis->motor->motor()->getUserPosition() << xAxisData(xpoint);
-      ui->xAxis->motor->motor()->goUserPosition( xAxisData(xpoint) , true );
+      ui->xAxis->motor->motor()->goUserPosition( xAxisData(xpoint) , QCaMotor::STOPPED );
       qtWait(100); // let it update the position
       double xPos = ui->xAxis->motor->motor()->getUserPosition();
       if ( ui->xAxis->motor->motor()->getLoLimitStatus() ||
@@ -686,14 +686,18 @@ void MainWindow::startScan(){
 
   // after scan positioning
   if ( ui->after->currentText() == "Start position" ) {
-    ui->xAxis->motor->motor()->goUserPosition(xStart, true);
+    ui->xAxis->motor->motor()->goUserPosition(xStart,QCaMotor::STARTED);
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition(yStart);
+      ui->yAxis->motor->motor()->goUserPosition(yStart,QCaMotor::STARTED);
   } else if ( ui->after->currentText() == "Prior position" ) {
-    ui->xAxis->motor->motor()->goUserPosition(xInitPos, true);
+    ui->xAxis->motor->motor()->goUserPosition(xInitPos,QCaMotor::STARTED);
     if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition(yInitPos);
+      ui->yAxis->motor->motor()->goUserPosition(yInitPos,QCaMotor::STARTED);
   }
+  ui->xAxis->motor->motor()->wait_stop();
+  if ( ui->scan2D->isChecked() )
+    ui->yAxis->motor->motor()->wait_stop();
+
 
 
   // finishing
