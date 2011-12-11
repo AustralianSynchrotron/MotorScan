@@ -15,7 +15,7 @@ FORMS += mainwindow.ui \
     axis.ui \
     graph.ui
 RESOURCES = scanmx.qrc
-LIBS += -lqcamotorgui
+LIBS += -lqtpv -lqtpvwidgets  -lqcamotor  -lqcamotorgui
 target.files = $$[TARGET]
 target.path = $$[INSTALLBASE]/bin
 INSTALLS += target
