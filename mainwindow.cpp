@@ -348,7 +348,7 @@ void MainWindow::checkReady(){
   if ( ui->scan2D->isChecked() )
     foreach(Axis * ax, yAxes)
       iAmReady &= ax->isReady() ;
-  iAmReady &= signalsE.size();
+  iAmReady &= (bool) signalsE.size();
   iAmReady &=
       ( ui->saveDir->styleSheet() == goodStyle ) &&
       ( ui->saveName->styleSheet() == goodStyle );
