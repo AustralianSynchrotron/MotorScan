@@ -16,10 +16,12 @@ private:
   bool positionAcceptable(double pos);
   bool positionsAcceptable();
 
+  Ui::axis * ui;
+
 public:
   explicit Axis(QWidget *parent = 0);
+  ~Axis();
 
-  Ui::axis * ui;
   QCaMotorGUI * motor;
 
   enum Mode { ABS=1, REL=0 };
@@ -28,6 +30,7 @@ public:
   inline double start() { return ui->start->value(); }
   inline double end() { return ui->end->value(); }
   inline Mode mode() { return (Mode) ui->mode->currentIndex(); }
+  inline QString modeString() { return ui->mode->currentText(); }
 
   bool isReady();
 
@@ -36,17 +39,25 @@ signals:
   void settingChanged();
   void statusChanged();
   void limitReached();
+  void pointsChanged(int);
 
 public slots:
-  void startEndCh();
-  void pointsCh(int val);
+  void setPoints(int val);
+  void setStart(double val);
+  void setEnd(double val);
+  void setMode(const QString & mod);
+  void setPointsEnabled(bool enab);
+
 
 private slots:
 
+  void startEndCh();
+  void pointsCh(int val);
   void setConnected(bool con);
   void widthCh(double val);
   void stepCh(double val);
   void updateLimits();
+  inline void setName() {setObjectName(motor->motor()->getPv());}
 
 };
 

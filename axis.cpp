@@ -13,6 +13,7 @@ Axis::Axis(QWidget *parent) :
   ui->setupUi(this);
   ui->setupPlace->insertWidget(0, motor->setupButton());
 
+  connect(motor->motor(), SIGNAL(changedPv()), SLOT(setName()));
   connect(motor->motor(), SIGNAL(changedConnected(bool)), SLOT(setConnected(bool)));
   connect(motor->motor(), SIGNAL(changedMoving(bool)), SIGNAL(statusChanged()));
   connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->start, SLOT(setMin(double)));
@@ -33,12 +34,19 @@ Axis::Axis(QWidget *parent) :
   connect(ui->width, SIGNAL(valueEdited(double)), SLOT(widthCh(double)));
   connect(ui->step, SIGNAL(valueEdited(double)), SLOT(stepCh(double)));
   connect(ui->points, SIGNAL(valueEdited(int)), SLOT(pointsCh(int)));
+  connect(ui->points, SIGNAL(valueEdited(int)), SIGNAL(pointsChanged(int)));
 
   connect(ui->mode, SIGNAL(activated(QString)), this, SIGNAL(settingChanged()));
 
   setConnected(false);
   positionsAcceptable();
 
+}
+
+Axis::~Axis()
+{
+  delete motor;
+  delete ui;
 }
 
 
@@ -111,6 +119,29 @@ void Axis::stepCh(double val){
     ui->step->setStyleSheet(badStyle);
   emit statusChanged();
   emit settingChanged();
+}
+
+void Axis::setPoints(int val){
+  ui->points->setValue(val);
+  pointsCh(val);
+}
+
+void Axis::setPointsEnabled(bool enab) {
+  ui->points->setEnabled(enab);
+}
+
+void Axis::setStart(double val) {
+  ui->start->setValue(val);
+  startEndCh();
+}
+
+void Axis::setEnd(double val) {
+  ui->end->setValue(val);
+  startEndCh();
+}
+
+void Axis::setMode(const QString & mod) {
+  ui->mode->setCurrentIndex( ui->mode->findText(mod) );
 }
 
 

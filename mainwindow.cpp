@@ -29,11 +29,20 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->saveDir, SIGNAL(textChanged(QString)), SLOT(prepareAutoSave()));
   connect(ui->saveName, SIGNAL(textChanged(QString)), SLOT(prepareAutoSave()));
   connect(ui->autoName, SIGNAL(toggled(bool)), SLOT(prepareAutoSave()));
+  connect(ui->addX, SIGNAL(clicked()), SLOT(addX()));
+  connect(ui->delX, SIGNAL(clicked()), SLOT(delX()));
+  connect(ui->addY, SIGNAL(clicked()), SLOT(addY()));
+  connect(ui->delY, SIGNAL(clicked()), SLOT(delY()));
+
+
 
   connect(ui->xAxis, SIGNAL(statusChanged()), SLOT(checkReady()));
   connect(ui->yAxis, SIGNAL(statusChanged()), SLOT(checkReady()));
   connect(ui->xAxis, SIGNAL(limitReached()), SLOT(stopScan()));
   connect(ui->yAxis, SIGNAL(limitReached()), SLOT(stopScan()));
+
+  xAxes << ui->xAxis;
+  yAxes << ui->yAxis;
 
   // Check for qtiplot
   QProcess checkQti;
@@ -66,69 +75,53 @@ MainWindow::MainWindow(QWidget *parent) :
   if ( localSettings->contains("xMotorStart") ) {
     bool ok;
     double val = localSettings->value("xMotorStart").toDouble(&ok);
-    if (ok) {
-      ui->xAxis->ui->start->setValue(val);
-      ui->xAxis->startEndCh();
-    }
+    if (ok)
+      ui->xAxis->setStart(val);
   }
   if ( localSettings->contains("xMotorEnd") ) {
     bool ok;
     double val = localSettings->value("xMotorEnd").toDouble(&ok);
-    if (ok) {
-      ui->xAxis->ui->end->setValue(val);
-      ui->xAxis->startEndCh();
-    }
+    if (ok)
+      ui->xAxis->setEnd(val);
   }
   if ( localSettings->contains("xMotorPoints") ) {
     bool ok;
     int val = localSettings->value("xMotorPoints").toInt(&ok);
-    if (ok) {
-      ui->xAxis->ui->points->setValue(val);
-      ui->xAxis->pointsCh(val);
-    }
+    if (ok)
+      ui->xAxis->setPoints(val);
   }
   if ( localSettings->contains("xMotorMode") )
-      ui->xAxis->ui->mode->setCurrentIndex(
-          ui->xAxis->ui->mode->findText(
-              localSettings->value("xMotorMode").toString() ) );
+    ui->xAxis->setMode( localSettings->value("xMotorMode").toString() ) ;
 
   bool secDim=false;
   if ( localSettings->contains("2D") )
     secDim = localSettings->value("2D").toBool();
   ui->scan2D->setChecked(secDim);
-  ui->yAxis->setVisible(secDim);
-  ui->yAxis->setEnabled(secDim);
+  ui->ySet->setVisible(secDim);
+  ui->ySet->setEnabled(secDim);
 
   if ( localSettings->contains("yMotor") )
     ui->yAxis->motor->motor()->setPv(localSettings->value("yMotor").toString());
   if ( localSettings->contains("yMotorStart") ) {
     bool ok;
     double val = localSettings->value("yMotorStart").toDouble(&ok);
-    if (ok) {
-      ui->yAxis->ui->start->setValue(val);
-      ui->yAxis->startEndCh();
-    }
+    if (ok)
+      ui->yAxis->setStart(val);
   }
   if ( localSettings->contains("yMotorEnd") ) {
     bool ok;
     double val = localSettings->value("yMotorEnd").toDouble(&ok);
-    if (ok) {
-      ui->yAxis->ui->end->setValue(val);
-      ui->yAxis->startEndCh();
-    }
+    if (ok)
+      ui->yAxis->setEnd(val);
   }
   if ( localSettings->contains("yMotorPoints") ) {
     bool ok;
     int val = localSettings->value("yMotorPoints").toInt(&ok);
-    if (ok) {
-      ui->yAxis->ui->points->setValue(val);
-      ui->yAxis->pointsCh(val);
-    }
+    if (ok)
+      ui->yAxis->setPoints(val);
   }
   if ( localSettings->contains("yMotorMode") )
-      ui->yAxis->ui->mode->setCurrentIndex(
-          ui->yAxis->ui->mode->findText(
-              localSettings->value("yMotorMode").toString() ) );
+    ui->yAxis->setMode( localSettings->value("yMotorMode").toString() ) ;
 
   if ( localSettings->contains("afterScan") )
       ui->after->setCurrentIndex(
@@ -187,6 +180,7 @@ void MainWindow::updatePlots() {
   for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ )
     xAxisData(xpoint) = xStart + ( xpoint * ( xEnd - xStart ) ) / (xPoints - 1);
 
+
   if ( ! ui->scan2D->isChecked() ) { // 2D
     yAxisData.resize(1);
     yAxisData=0;
@@ -213,8 +207,36 @@ void MainWindow::updatePlots() {
 
   }
 
+
+  columns.clear();
+  ui->dataTable->setColumnCount(0);
+  ui->dataTable->setRowCount(0);
+
+  foreach (Axis * ax, xAxes + ( ui->scan2D->isChecked() ? yAxes : QList<Axis*>() ) ) {
+    QTableWidgetItem * tableItem = new QTableWidgetItem(ax->motor->motor()->getPv());
+    int tablePos = ui->dataTable->columnCount();
+    columns[ax] = tablePos;
+    ui->dataTable->insertColumn(tablePos);
+    ui->dataTable->setHorizontalHeaderItem(tablePos, tableItem);
+  }
+  foreach (Signal * sg, signalsE) {
+    QTableWidgetItem * tableItem = new QTableWidgetItem(sg->pv->pv());
+    int tablePos = ui->dataTable->columnCount();
+    columns[sg] = tablePos;
+    ui->dataTable->insertColumn(tablePos);
+    ui->dataTable->setHorizontalHeaderItem(tablePos, tableItem);
+  }
+  updateHeaders();
+
   updateGUI();
 
+}
+
+
+void MainWindow::updateHeaders() {
+  QApplication::processEvents();
+  foreach(QObject * obj, columns.keys())
+    ui->dataTable->horizontalHeaderItem(columns[obj])->setText(obj->objectName());
 }
 
 
@@ -226,16 +248,16 @@ void MainWindow::storeSettings() {
   localSettings->clear();
 
   localSettings->setValue("xMotor", ui->xAxis->motor->motor()->getPv());
-  localSettings->setValue("xMotorStart", ui->xAxis->ui->start->value());
-  localSettings->setValue("xMotorEnd", ui->xAxis->ui->end->value());
-  localSettings->setValue("xMotorPoints", ui->xAxis->ui->points->value());
-  localSettings->setValue("xMotorMode", ui->xAxis->ui->mode->currentText());
+  localSettings->setValue("xMotorStart", ui->xAxis->start());
+  localSettings->setValue("xMotorEnd", ui->xAxis->end());
+  localSettings->setValue("xMotorPoints", ui->xAxis->points());
+  localSettings->setValue("xMotorMode", ui->xAxis->modeString());
   localSettings->setValue("2D", ui->scan2D->isChecked());
   localSettings->setValue("yMotor", ui->yAxis->motor->motor()->getPv());
-  localSettings->setValue("yMotorStart", ui->yAxis->ui->start->value());
-  localSettings->setValue("yMotorEnd", ui->yAxis->ui->end->value());
-  localSettings->setValue("yMotorPoints", ui->yAxis->ui->points->value());
-  localSettings->setValue("yMotorMode", ui->yAxis->ui->mode->currentText());
+  localSettings->setValue("yMotorStart", ui->yAxis->start());
+  localSettings->setValue("yMotorEnd", ui->yAxis->end());
+  localSettings->setValue("yMotorPoints", ui->yAxis->points());
+  localSettings->setValue("yMotorMode", ui->yAxis->modeString());
   localSettings->setValue("afterScan", ui->after->currentText());
   localSettings->setValue("saveDir", ui->saveDir->text());
   localSettings->setValue("saveName", ui->saveName->text());
@@ -320,12 +342,16 @@ void MainWindow::saveResult(){
 
 
 void MainWindow::checkReady(){
-  bool iAmReady = ui->xAxis->isReady() ;
-  iAmReady = iAmReady && ( ! ui->scan2D->isChecked() || ui->yAxis->isReady() );
-  iAmReady = iAmReady && signalsE.size();
-  iAmReady = iAmReady
-      && ( ui->saveDir->styleSheet() == goodStyle )
-      && ( ui->saveName->styleSheet() == goodStyle );
+  bool iAmReady = true;
+  foreach(Axis * ax, xAxes)
+    iAmReady &= ax->isReady() ;
+  if ( ui->scan2D->isChecked() )
+    foreach(Axis * ax, yAxes)
+      iAmReady &= ax->isReady() ;
+  iAmReady &= signalsE.size();
+  iAmReady &=
+      ( ui->saveDir->styleSheet() == goodStyle ) &&
+      ( ui->saveName->styleSheet() == goodStyle );
   ui->startStop->setEnabled(iAmReady || nowScanning() );
 }
 
@@ -340,22 +366,17 @@ void MainWindow::constructSignalsLayout(){
   storeSettings();
 }
 
-int MainWindow::column(Signal * sig) const {
-  for (int icur = 0 ; icur < ui->dataTable->columnCount() ; icur++ )
-    if ( ui->dataTable->horizontalHeaderItem(icur)  == sig->tableItem )
-      return icur;
-  return -1;
-}
-
 
 void MainWindow::addSignal(const QString & pvName){
 
   Signal * sg = new Signal(this);
   sg->sig->addItem(pvName);
   sg->sig->setCurrentIndex( sg->sig->findText(pvName) );
+  signalsE.append(sg);
 
   connect(sg->rem, SIGNAL(clicked()), this, SLOT(removeSignal()));
   connect(sg->sig, SIGNAL(editTextChanged(QString)), SLOT(storeSettings()));
+  connect(sg->pv, SIGNAL(pvChanged(QString)), SLOT(updateHeaders()));
 
   if ( ! ui->scan2D->isChecked() ) { // 2D
     sg->setData(&xAxisData);
@@ -383,14 +404,8 @@ void MainWindow::addSignal(const QString & pvName){
 
   ui->plots->addSubWindow(sg->plotWin)->showMaximized();
 
-
-  sg->tableItem = new QTableWidgetItem(pvName);
-  signalsE.append(sg);
-  int tablePos = ui->dataTable->columnCount();
-  ui->dataTable->insertColumn(tablePos);
-  ui->dataTable->setHorizontalHeaderItem(tablePos, sg->tableItem);
-
   constructSignalsLayout();
+  updatePlots();
 
 }
 
@@ -403,32 +418,86 @@ void MainWindow::removeSignal(){
   if (!sg)
     return;
 
-
-  ui->dataTable->removeColumn(column(sg));
   signalsE.removeOne(sg);
   storeSettings();
   delete sg;
   constructSignalsLayout();
+  updatePlots();
 
 }
+
+
+
+void MainWindow::addX() {
+
+  Axis * xax = new Axis(this);
+  xAxes << xax;
+  ui->setupLayout->insertWidget(ui->setupLayout->indexOf(ui->xButtons), xax);
+  ui->delX->setEnabled(xAxes.size() > 1);
+  xax->setPoints(ui->xAxis->points());
+  xax->setPointsEnabled(false);
+
+  connect(xax, SIGNAL(statusChanged()), SLOT(checkReady()));
+  connect(xax, SIGNAL(limitReached()), SLOT(stopScan()));
+  connect(xax, SIGNAL(settingChanged()), SLOT(storeSettings()));
+  connect(xax->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(xax->motor->motor(), SIGNAL(changedPv(QString)), SLOT(updateHeaders()));
+  connect(ui->xAxis, SIGNAL(pointsChanged(int)), xax, SLOT(setPoints(int)));
+
+  updatePlots();
+
+}
+
+void MainWindow::delX() {
+  if (xAxes.size() < 2)
+    return;
+  delete xAxes.takeLast();
+  ui->delX->setEnabled(xAxes.size() > 1);
+  updatePlots();
+}
+
+void MainWindow::addY() {
+
+  Axis * yax = new Axis(this);
+  yAxes << yax;
+  ui->yLay->insertWidget(ui->yLay->indexOf(ui->yButtons), yax);
+  ui->delY->setEnabled(yAxes.size() > 1);
+  yax->setPoints(ui->yAxis->points());
+  yax->setPointsEnabled(false);
+
+  connect(yax, SIGNAL(statusChanged()), SLOT(checkReady()));
+  connect(yax, SIGNAL(limitReached()), SLOT(stopScan()));
+  connect(yax, SIGNAL(settingChanged()), SLOT(storeSettings()));
+  connect(yax->motor->motor(), SIGNAL(changedPv(QString)), SLOT(storeSettings()));
+  connect(yax->motor->motor(), SIGNAL(changedPv(QString)), SLOT(updateHeaders()));
+  connect(ui->yAxis, SIGNAL(pointsChanged(int)), yax, SLOT(setPoints(int)));
+
+  updatePlots();
+
+}
+
+void MainWindow::delY() {
+  if (yAxes.size() < 2)
+    return;
+  delete yAxes.takeLast();
+  ui->delY->setEnabled(yAxes.size() > 1);
+  updatePlots();
+}
+
+
+
+
+
 
 
 
 void MainWindow::switchDimension(bool secondDim){
 
   if (secondDim) {
-
-    // data table
     ui->dataTable->insertColumn(1);
     ui->dataTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Y Axis"));
-
   } else {
-
-    // data table
     ui->dataTable->removeColumn(1);
-
-    //plot
-
   }
 
   checkReady();
@@ -447,8 +516,10 @@ void MainWindow::startStop(){
 void MainWindow::stopScan(){
     stopNow=true;
     if (nowScanning()) {
-      ui->xAxis->motor->motor()->stop();
-      ui->yAxis->motor->motor()->stop();
+      foreach (Axis * ax, xAxes)
+        ax->motor->motor()->stop();
+      foreach (Axis * ax, yAxes)
+        ax->motor->motor()->stop();
     }
 }
 
@@ -494,7 +565,28 @@ void MainWindow::openQti() {
 
 
 
+void describeAndPrepareAxis(Axis * ax, QTextStream & dataStr,
+                            QHash<Axis*, double> & initPos,
+                            QHash<Axis*, QPair<double,double> > & range) {
 
+  dataStr << "# PV: \"" << ax->motor->motor()->getPv() << "\"\n"
+          << "# Description: \"" << ax->motor->motor()->getDescription() << "\"\n";
+
+  const double init = ax->motor->motor()->getUserPosition();
+  initPos.insert(ax,init);
+  dataStr << "# Initial position: " << init << "\n";
+
+  double start = ax->start();
+  double end = ax->end();
+  if (ax->mode() == Axis::REL) {
+    start += init;
+    end += init;
+  }
+  range.insert(ax, qMakePair(start, end));
+  dataStr << "# Scan range: " << start << " ... " << end << "\n"
+          << "#\n";
+
+}
 
 
 
@@ -549,39 +641,31 @@ void MainWindow::startScan(){
         << "#\n";
   dataStr << "#\n";
 
-  dataStr
-      << "# X axis PV: \"" << ui->xAxis->motor->motor()->getPv() << "\"\n"
-      << "# X axis Description: \"" << ui->xAxis->motor->motor()->getDescription() << "\"\n"
-      << "#\n";
-  if ( ui->scan2D->isChecked() )
-    dataStr
-        << "# Y axis PV: \"" << ui->yAxis->motor->motor()->getPv() << "\"\n"
-        << "# Y axis Description: \"" << ui->yAxis->motor->motor()->getDescription() << "\"\n"
-        << "#\n";
+  QHash<Axis*,double> initPos;
+  QHash<Axis*, QPair<double,double> > range;
 
 
-  // get initial positions
-  const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
-  const double yInitPos = ui->scan2D->isChecked() ?
-                          ui->yAxis->motor->motor()->getUserPosition()  :  0 ;
+  dataStr << "# Number of X motors:" << xAxes.size() << "\n";
+  foreach (Axis * ax, xAxes) {
+    if (xAxes.size() > 1)
+      dataStr << "X axis, motor " << xAxes.indexOf(ax) << "\n";
+    else
+      dataStr << "X axis\n";
+    describeAndPrepareAxis(ax, dataStr, initPos, range);
+  }
 
+  if ( ui->scan2D->isChecked() ) {
+    foreach (Axis * ax, yAxes) {
+      if (yAxes.size() > 1)
+        dataStr << "Y axis, motor " << yAxes.indexOf(ax) << "\n";
+      else
+        dataStr << "Y axis\n";
+      describeAndPrepareAxis(ax, dataStr, initPos, range);
+    }
+  }
 
-  dataStr << "# Initial position of X axis: " << xInitPos << "\n";
-  if ( ui->scan2D->isChecked() )
-    dataStr << "# Initial position of Y axis: " << yInitPos << "\n";
-  dataStr << "#\n";
-
-
-  // actual starting positions
-  const double xStart = xAxisData(0);
-  const double yStart = yAxisData(0);
-  const double xEnd = xAxisData(xPoints-1) ;
-  const double yEnd = yAxisData(yPoints-1) ;
-
-  dataStr << "# X axis scan range: " << xStart << " ... " << xEnd << "\n";
-  if ( ui->scan2D->isChecked() )
-    dataStr << "# Y axis scan range: " << yStart << " ... " << yEnd << "\n";
   dataStr << "#\n"
+          << "#\n"
           << "# Signals:\n"
           << "#\n";
   foreach (Signal * sig, signalsE)
@@ -590,7 +674,6 @@ void MainWindow::startScan(){
   dataStr << "#\n";
 
   // reset progress
-  ui->dataTable->setRowCount(0);
   ui->progressBar->setMaximum(totalPoints);
 
   dataStr
@@ -612,17 +695,30 @@ void MainWindow::startScan(){
   int curpoint = 0;
   for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ ) {
 
-    if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition( yAxisData(ypoint) , QCaMotor::STOPPED );
-    if ( ui->yAxis->motor->motor()->getLoLimitStatus() ||
-         ui->yAxis->motor->motor()->getHiLimitStatus() )
-      dataStr <<  "# Y Axis: limit hit.\n";
-    double yPos = ui->yAxis->motor->motor()->getUserPosition();
+    QHash<Axis*,double> yPos;
+    if ( ui->scan2D->isChecked() ) {
 
-    updateGUI();
-    if ( stopNow )
-      break;
+      yPos.clear();
+      foreach(Axis * ax, yAxes)
+        ax->motor->motor()->goUserPosition
+            ( range[ax].first +
+              ( ypoint * ( range[ax].second - range[ax].first ) ) / (yPoints - 1),
+              QCaMotor::STARTED );
+      foreach(Axis * ax, yAxes) {
+        ax->motor->motor()->wait_stop();
+        if ( ax->motor->motor()->getLoLimitStatus() ||
+             ax->motor->motor()->getHiLimitStatus() )
+          dataStr <<  "# Y Axis: " + ax->motor->motor()->getPv() + " limit hit.\n";
+        yPos[ax] = ax->motor->motor()->getUserPosition();
+      }
 
+      updateGUI();
+      if ( stopNow )
+        break;
+
+    }
+
+    QHash<Axis*,double> xPos;
     for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ ) {
 
       ui->dataTable->insertRow(curpoint);
@@ -630,41 +726,49 @@ void MainWindow::startScan(){
                                            new QTableWidgetItem(QString::number(curpoint+1)));
       ui->dataTable->scrollToBottom();
 
-      //qDebug() << ui->xAxis->motor->motor()->getUserPosition() << xAxisData(xpoint);
-      ui->xAxis->motor->motor()->goUserPosition( xAxisData(xpoint) , QCaMotor::STOPPED );
-      qtWait(100); // let it update the position
-      double xPos = ui->xAxis->motor->motor()->getUserPosition();
-      if ( ui->xAxis->motor->motor()->getLoLimitStatus() ||
-           ui->xAxis->motor->motor()->getHiLimitStatus() )
-        dataStr <<  "# X Axis: limit hit.\n";
+      xPos.clear();
+      foreach(Axis * ax, xAxes)
+        ax->motor->motor()->goUserPosition
+            ( range[ax].first +
+              ( xpoint * ( range[ax].second - range[ax].first ) ) / (xPoints - 1),
+              QCaMotor::STARTED );
+      foreach(Axis * ax, xAxes) {
+        ax->motor->motor()->wait_stop();
+        if ( ax->motor->motor()->getLoLimitStatus() ||
+             ax->motor->motor()->getHiLimitStatus() )
+          dataStr <<  "# X Axis: " + ax->motor->motor()->getPv() + " limit hit.\n";
+        xPos[ax] = ax->motor->motor()->getUserPosition();
+      }
+
       if ( ! ui->scan2D->isChecked() )
-        xAxisData(xpoint) = xPos;
+        xAxisData(xpoint) = xPos[ui->xAxis];
 
       updateGUI();
       if ( stopNow )
         break;
 
-      ui->dataTable->setItem(curpoint, 0,
-                             new QTableWidgetItem(QString::number(xPos)));
+      dataStr << curpoint+1 << " ";
+      foreach(Axis * ax, xAxes) {
+        ui->dataTable->setItem(curpoint, columns[ax],
+                               new QTableWidgetItem(QString::number(xPos[ax])));
+        dataStr << QString::number(xPos[ax], 'e');
+      }
       if ( ui->scan2D->isChecked() )
-        ui->dataTable->setItem(curpoint, 1,
-                               new QTableWidgetItem(QString::number(yPos)));
-
-      dataStr
-          << curpoint+1 << " "
-          << QString::number(xPos, 'e') << " "
-          << ( ui->scan2D->isChecked() ? QString::number(yPos, 'e') + " " : "" );
+        foreach(Axis * ax, yAxes) {
+          ui->dataTable->setItem(curpoint, columns[ax],
+                                 new QTableWidgetItem(QString::number(yPos[ax])));
+          dataStr << QString::number(yPos[ax], 'e');
+        }
 
       updateGUI();
       foreach(Signal * sig, signalsE)
         sig->pv->needUpdated();
       foreach(Signal * sig, signalsE) {
         QString strval = sig->get(curpoint).toString();
-        ui->dataTable->setItem(curpoint, column(sig),
+        ui->dataTable->setItem(curpoint, columns[sig],
                                new QTableWidgetItem(strval));
         dataStr << strval << " ";
       }
-
       dataStr <<  "\n";
 
       ui->progressBar->setValue(++curpoint);
@@ -685,20 +789,14 @@ void MainWindow::startScan(){
   dataFile.close();
 
   // after scan positioning
-  if ( ui->after->currentText() == "Start position" ) {
-    ui->xAxis->motor->motor()->goUserPosition(xStart,QCaMotor::STARTED);
-    if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition(yStart,QCaMotor::STARTED);
-  } else if ( ui->after->currentText() == "Prior position" ) {
-    ui->xAxis->motor->motor()->goUserPosition(xInitPos,QCaMotor::STARTED);
-    if ( ui->scan2D->isChecked() )
-      ui->yAxis->motor->motor()->goUserPosition(yInitPos,QCaMotor::STARTED);
-  }
-  ui->xAxis->motor->motor()->wait_stop();
-  if ( ui->scan2D->isChecked() )
-    ui->yAxis->motor->motor()->wait_stop();
+  foreach (Axis * ax, xAxes + ( ui->scan2D->isChecked() ? yAxes : QList<Axis*>() ) )
+    if ( ui->after->currentText() == "Start position" )
+      ax->motor->motor()->goUserPosition(range[ax].first, QCaMotor::STARTED);
+    else if ( ui->after->currentText() == "Prior position" )
+      ax->motor->motor()->goUserPosition(initPos[ax], QCaMotor::STARTED);
 
-
+  foreach (Axis * ax, xAxes + ( ui->scan2D->isChecked() ? yAxes : QList<Axis*>() ) )
+    ax->motor->motor()->wait_stop();
 
   // finishing
   ui->startStop->setText("Start");
@@ -728,7 +826,6 @@ MainWindow::Signal::Signal(QWidget* parent) :
   rem(new QPushButton("-", parent)),
   sig(new QComboBox(parent)),
   val(new QLabel(parent)),
-  tableItem(new QTableWidgetItem()),
   plotWin(new QMdiSubWindow(parent)),
   pv(new QEpicsPv(this)),
   graph(new Graph)
@@ -746,6 +843,7 @@ MainWindow::Signal::Signal(QWidget* parent) :
   connect(sig, SIGNAL(editTextChanged(QString)), pv, SLOT(setPV(QString)));
   connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setHeader(QString)));
   connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
+  connect(pv, SIGNAL(pvChanged(QString)), SLOT(setName(QString)));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
@@ -802,7 +900,6 @@ void MainWindow::Signal::setData(int width, int height,
 
 
 void MainWindow::Signal::setHeader(const QString & text) {
-  tableItem->setText(text);
   plotWin->setWindowTitle(text);
   graph->setTitle(text);
 }

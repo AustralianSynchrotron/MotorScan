@@ -19,6 +19,7 @@
 #include <qcamotorgui.h>
 
 #include "graph.h"
+#include "axis.h"
 
 
 namespace Ui {
@@ -43,6 +44,11 @@ private:
     static const QString badStyle;
     static const QString goodStyle;
 
+    QList<Axis*> xAxes;
+    QList<Axis*> yAxes;
+
+    QHash<QObject*,int> columns; // QWidget: Signal or Axis
+
 
     QString tableWasSavedTo;
 
@@ -56,8 +62,6 @@ private:
     bool nowScanning();
 
     static void updateGUI();
-
-    int column(Signal* sig) const;
 
     Line xAxisData;
     Line yAxisData;
@@ -78,6 +82,12 @@ private slots:
     void storeSettings();
     void openQti();
     void updatePlots();
+    void updateHeaders();
+    void addX();
+    void delX();
+    void addY();
+    void delY();
+
 
 };
 
@@ -112,7 +122,7 @@ public:
   QPushButton * rem;
   QComboBox * sig;
   QLabel * val;
-  QTableWidgetItem * tableItem;
+//  QTableWidgetItem * tableItem;
   QMdiSubWindow * plotWin;
   QEpicsPv * pv;
 
@@ -140,6 +150,7 @@ public:
 private slots:
 
   void setHeader(const QString & text);
+  inline void setName(const QString & name) {setObjectName(name);}
   inline void updateValue(const QVariant & data) { val->setText(data.toString()); }
 
 };
