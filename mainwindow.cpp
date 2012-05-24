@@ -66,85 +66,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
   // Restore local settings
-
   localSettings = new QSettings(QDir::homePath() + "/.scanmx",
                                 QSettings::IniFormat);
+  loadSettings();
 
-  if ( localSettings->contains("xMotor") )
-    ui->xAxis->motor->motor()->setPv(localSettings->value("xMotor").toString());
-  if ( localSettings->contains("xMotorStart") ) {
-    bool ok;
-    double val = localSettings->value("xMotorStart").toDouble(&ok);
-    if (ok)
-      ui->xAxis->setStart(val);
-  }
-  if ( localSettings->contains("xMotorEnd") ) {
-    bool ok;
-    double val = localSettings->value("xMotorEnd").toDouble(&ok);
-    if (ok)
-      ui->xAxis->setEnd(val);
-  }
-  if ( localSettings->contains("xMotorPoints") ) {
-    bool ok;
-    int val = localSettings->value("xMotorPoints").toInt(&ok);
-    if (ok)
-      ui->xAxis->setPoints(val);
-  }
-  if ( localSettings->contains("xMotorMode") )
-    ui->xAxis->setMode( localSettings->value("xMotorMode").toString() ) ;
-
-  bool secDim=false;
-  if ( localSettings->contains("2D") )
-    secDim = localSettings->value("2D").toBool();
-  ui->scan2D->setChecked(secDim);
-  ui->ySet->setVisible(secDim);
-  ui->ySet->setEnabled(secDim);
-
-  if ( localSettings->contains("yMotor") )
-    ui->yAxis->motor->motor()->setPv(localSettings->value("yMotor").toString());
-  if ( localSettings->contains("yMotorStart") ) {
-    bool ok;
-    double val = localSettings->value("yMotorStart").toDouble(&ok);
-    if (ok)
-      ui->yAxis->setStart(val);
-  }
-  if ( localSettings->contains("yMotorEnd") ) {
-    bool ok;
-    double val = localSettings->value("yMotorEnd").toDouble(&ok);
-    if (ok)
-      ui->yAxis->setEnd(val);
-  }
-  if ( localSettings->contains("yMotorPoints") ) {
-    bool ok;
-    int val = localSettings->value("yMotorPoints").toInt(&ok);
-    if (ok)
-      ui->yAxis->setPoints(val);
-  }
-  if ( localSettings->contains("yMotorMode") )
-    ui->yAxis->setMode( localSettings->value("yMotorMode").toString() ) ;
-
-  if ( localSettings->contains("afterScan") )
-      ui->after->setCurrentIndex(
-          ui->after->findText(
-              localSettings->value("afterScan").toString() ) );
-
-  if ( localSettings->contains("saveDir") )
-    ui->saveDir->setText(localSettings->value("saveDir").toString());
-  else
-    ui->saveDir->setText(QDir::homePath());
-  if ( localSettings->contains("saveName") )
-    ui->saveName->setText(localSettings->value("saveName").toString());
-  if ( localSettings->contains("autoName") )
-    ui->autoName->setChecked( localSettings->value("autoName").toBool() );
-
-  updatePlots();
-
-  int size = localSettings->beginReadArray("detectors");
-  for (int i = 0; i < size; ++i) {
-    localSettings->setArrayIndex(i);
-    addSignal(localSettings->value("detector").toString());
-  }
-  localSettings->endArray();
 
   connect(ui->xAxis, SIGNAL(settingChanged()), SLOT(updatePlots()));
   connect(ui->xAxis, SIGNAL(settingChanged()), SLOT(storeSettings()));
@@ -247,17 +172,34 @@ void MainWindow::storeSettings() {
 
   localSettings->clear();
 
-  localSettings->setValue("xMotor", ui->xAxis->motor->motor()->getPv());
-  localSettings->setValue("xMotorStart", ui->xAxis->start());
-  localSettings->setValue("xMotorEnd", ui->xAxis->end());
-  localSettings->setValue("xMotorPoints", ui->xAxis->points());
-  localSettings->setValue("xMotorMode", ui->xAxis->modeString());
+  localSettings->beginWriteArray("xmotors");
+  for (int i=0; i< xAxes.size(); i++) {
+    localSettings->setArrayIndex(i);
+    Axis * ax = xAxes[i];
+    localSettings->setValue("pv", ax->motor->motor()->getPv());
+    localSettings->setValue("start", ax->start());
+    localSettings->setValue("end", ax->end());
+    if (!i)
+      localSettings->setValue("points", ax->points());
+    localSettings->setValue("mode", ax->modeString());
+  }
+  localSettings->endArray();
+
   localSettings->setValue("2D", ui->scan2D->isChecked());
-  localSettings->setValue("yMotor", ui->yAxis->motor->motor()->getPv());
-  localSettings->setValue("yMotorStart", ui->yAxis->start());
-  localSettings->setValue("yMotorEnd", ui->yAxis->end());
-  localSettings->setValue("yMotorPoints", ui->yAxis->points());
-  localSettings->setValue("yMotorMode", ui->yAxis->modeString());
+
+  localSettings->beginWriteArray("ymotors");
+  for (int i=0; i< yAxes.size(); i++) {
+    localSettings->setArrayIndex(i);
+    Axis * ax = yAxes[i];
+    localSettings->setValue("pv", ax->motor->motor()->getPv());
+    localSettings->setValue("start", ax->start());
+    localSettings->setValue("end", ax->end());
+    if (!i)
+      localSettings->setValue("points", ax->points());
+    localSettings->setValue("mode", ax->modeString());
+  }
+  localSettings->endArray();
+
   localSettings->setValue("afterScan", ui->after->currentText());
   localSettings->setValue("saveDir", ui->saveDir->text());
   localSettings->setValue("saveName", ui->saveName->text());
@@ -267,6 +209,117 @@ void MainWindow::storeSettings() {
   for (int i = 0; i < signalsE.size(); ++i) {
     localSettings->setArrayIndex(i);
     localSettings->setValue("detector", signalsE[i]->sig->currentText());
+  }
+  localSettings->endArray();
+
+}
+
+
+void MainWindow::loadSettings() {
+
+  int size;
+
+  for (int i=0; i<xAxes.size()-1; i++)
+    delX();
+  size = localSettings->beginReadArray("xmotors");
+  for (int i=0; i < size; i++) {
+
+    localSettings->setArrayIndex(i);
+    if (i) // first motor is already there
+      addX();
+    Axis * ax = xAxes.last();
+
+    if ( localSettings->contains("pv") )
+      ax->motor->motor()->setPv(localSettings->value("pv").toString());
+    if ( localSettings->contains("start") ) {
+      bool ok;
+      double val = localSettings->value("start").toDouble(&ok);
+      if (ok)
+        ax->setStart(val);
+    }
+    if ( localSettings->contains("end") ) {
+      bool ok;
+      double val = localSettings->value("end").toDouble(&ok);
+      if (ok)
+        ax->setEnd(val);
+    }
+    if ( ! i && // this is the first motor
+         localSettings->contains("points") ) {
+      bool ok;
+      int val = localSettings->value("points").toInt(&ok);
+      if (ok)
+        ax->setPoints(val);
+    }
+    if ( localSettings->contains("mode") )
+      ax->setMode( localSettings->value("mode").toString() ) ;
+
+  }
+  localSettings->endArray();
+
+  bool secDim=false;
+  if ( localSettings->contains("2D") )
+    secDim = localSettings->value("2D").toBool();
+  ui->scan2D->setChecked(secDim);
+  ui->ySet->setVisible(secDim);
+  ui->ySet->setEnabled(secDim);
+
+  for (int i=0; i<yAxes.size()-1; i++)
+    delX();
+  size = localSettings->beginReadArray("ymotors");
+  for (int i=0; i < size; i++) {
+
+    localSettings->setArrayIndex(i);
+    if (i) // first motor is already there
+      addY();
+    Axis * ax = yAxes.last();
+
+    if ( localSettings->contains("pv") )
+      ax->motor->motor()->setPv(localSettings->value("pv").toString());
+    if ( localSettings->contains("start") ) {
+      bool ok;
+      double val = localSettings->value("start").toDouble(&ok);
+      if (ok)
+        ax->setStart(val);
+    }
+    if ( localSettings->contains("end") ) {
+      bool ok;
+      double val = localSettings->value("end").toDouble(&ok);
+      if (ok)
+        ax->setEnd(val);
+    }
+    if ( ! i && // this is the first motor
+         localSettings->contains("points") ) {
+      bool ok;
+      int val = localSettings->value("points").toInt(&ok);
+      if (ok)
+        ax->setPoints(val);
+    }
+    if ( localSettings->contains("mode") )
+      ax->setMode( localSettings->value("mode").toString() ) ;
+
+  }
+  localSettings->endArray();
+
+  if ( localSettings->contains("afterScan") )
+      ui->after->setCurrentIndex(
+          ui->after->findText(
+              localSettings->value("afterScan").toString() ) );
+
+  if ( localSettings->contains("saveDir") )
+    ui->saveDir->setText(localSettings->value("saveDir").toString());
+  else
+    ui->saveDir->setText(QDir::homePath());
+  if ( localSettings->contains("saveName") )
+    ui->saveName->setText(localSettings->value("saveName").toString());
+  if ( localSettings->contains("autoName") )
+    ui->autoName->setChecked( localSettings->value("autoName").toBool() );
+
+  updatePlots();
+
+  size = localSettings->beginReadArray("detectors");
+  for (int i = 0; i < size; ++i) {
+    localSettings->setArrayIndex(i);
+    addSignal(localSettings->value("detector").toString());
   }
   localSettings->endArray();
 
@@ -543,9 +596,10 @@ void MainWindow::openQti() {
   dataFile.open(QIODevice::Truncate | QIODevice::WriteOnly);
   QTextStream dataStr(&dataFile);
 
-  dataStr
-      << "X "
-      << ( ui->scan2D->isChecked() ? "Y " : "" );
+  for (int i=0; i< xAxes.size(); i++)
+    dataStr << "X" << i << " ";
+  for (int i=0; i< yAxes.size(); i++)
+    dataStr << "Y" << i << " ";
   foreach (Signal * sig, signalsE)
     dataStr
         << sig->pv->pv() << " ";
@@ -648,18 +702,18 @@ void MainWindow::startScan(){
   dataStr << "# Number of X motors:" << xAxes.size() << "\n";
   foreach (Axis * ax, xAxes) {
     if (xAxes.size() > 1)
-      dataStr << "X axis, motor " << xAxes.indexOf(ax) << "\n";
+      dataStr << "# X axis, motor " << xAxes.indexOf(ax) << "\n";
     else
-      dataStr << "X axis\n";
+      dataStr << "# X axis\n";
     describeAndPrepareAxis(ax, dataStr, initPos, range);
   }
 
   if ( ui->scan2D->isChecked() ) {
     foreach (Axis * ax, yAxes) {
       if (yAxes.size() > 1)
-        dataStr << "Y axis, motor " << yAxes.indexOf(ax) << "\n";
+        dataStr << "# Y axis, motor " << yAxes.indexOf(ax) << "\n";
       else
-        dataStr << "Y axis\n";
+        dataStr << "# Y axis\n";
       describeAndPrepareAxis(ax, dataStr, initPos, range);
     }
   }
@@ -751,13 +805,13 @@ void MainWindow::startScan(){
       foreach(Axis * ax, xAxes) {
         ui->dataTable->setItem(curpoint, columns[ax],
                                new QTableWidgetItem(QString::number(xPos[ax])));
-        dataStr << QString::number(xPos[ax], 'e');
+        dataStr << QString::number(xPos[ax], 'e') << " ";
       }
       if ( ui->scan2D->isChecked() )
         foreach(Axis * ax, yAxes) {
           ui->dataTable->setItem(curpoint, columns[ax],
                                  new QTableWidgetItem(QString::number(yPos[ax])));
-          dataStr << QString::number(yPos[ax], 'e');
+          dataStr << QString::number(yPos[ax], 'e') << " ";
         }
 
       updateGUI();

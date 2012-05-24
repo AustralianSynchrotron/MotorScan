@@ -79,7 +79,6 @@ private slots:
     void removeSignal();
     void switchDimension(bool secondDim);
     void checkReady();
-    void storeSettings();
     void openQti();
     void updatePlots();
     void updateHeaders();
@@ -87,6 +86,9 @@ private slots:
     void delX();
     void addY();
     void delY();
+
+    void storeSettings();
+    void loadSettings();
 
 
 };
