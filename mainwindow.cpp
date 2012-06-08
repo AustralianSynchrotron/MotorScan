@@ -766,6 +766,11 @@ void MainWindow::startScan(){
         yPos[ax] = ax->motor->motor()->getUserPosition();
       }
 
+      if (ui->relaxY->value() != 0.0 ) {
+        qtWait(ui->startStop, SIGNAL(clicked()), ui->relaxY->value() * 1000 ); // relaxation must finish on start/stop clicked
+        QApplication::processEvents(); // if start/stop was clicked the stopNow must be updated in here
+      }
+
       updateGUI();
       if ( stopNow )
         break;
@@ -792,6 +797,11 @@ void MainWindow::startScan(){
              ax->motor->motor()->getHiLimitStatus() )
           dataStr <<  "# X Axis: " + ax->motor->motor()->getPv() + " limit hit.\n";
         xPos[ax] = ax->motor->motor()->getUserPosition();
+      }
+
+      if (ui->relax->value() != 0.0 ) {
+        qtWait(ui->startStop, SIGNAL(clicked()), ui->relax->value() * 1000 ); // relaxation must finish on start/stop clicked
+        QApplication::processEvents(); // if start/stop was clicked the stopNow must be updated in here
       }
 
       if ( ! ui->scan2D->isChecked() )

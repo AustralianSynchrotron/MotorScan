@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1576</width>
-    <height>956</height>
+    <width>666</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,7 +111,38 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="Axis" name="yAxis" native="true"/>
+            <widget class="QWidget" name="relaxYWidget" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <property name="margin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>Line relax time</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="relaxY">
+                <property name="suffix">
+                 <string>s</string>
+                </property>
+                <property name="decimals">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <double>3600.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="Axis" name="yAxis" native="true">
+             <zorder>relaxYWidget</zorder>
+            </widget>
            </item>
            <item>
             <widget class="QWidget" name="yButtons" native="true">
@@ -196,6 +227,30 @@
          </widget>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Relax time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="relax">
+            <property name="suffix">
+             <string>s</string>
+            </property>
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <double>3600.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QScrollArea" name="signalsList">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -223,8 +278,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>306</width>
-             <height>677</height>
+             <width>234</width>
+             <height>92</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -565,8 +620,8 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>10</x>
-     <y>92</y>
+     <x>19</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>156</x>
@@ -581,8 +636,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>131</x>
-     <y>92</y>
+     <x>140</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>156</x>

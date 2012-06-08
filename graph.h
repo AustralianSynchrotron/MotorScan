@@ -7,7 +7,6 @@
 #include <qwt_plot_grid.h>
 #include <qwt_scale_engine.h>
 #include <qwt_scale_widget.h>
-#include <qwt_plot_grid.h>
 #include <qwt_plot_zoomer.h>
 #include <QDebug>
 

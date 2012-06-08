@@ -198,10 +198,9 @@ public:
     else {
       double xwidth = xInt.maxValue() - xInt.minValue();
       double ywidth = yInt.maxValue() - yInt.minValue();
-      val =
-          * ( zData
-              + (int) ( (width-1) * ( x - xInt.minValue() ) / xwidth )
-              + (int) ( width * (height-1) * ( y - yInt.minValue() ) / ywidth ) );
+      val = * ( zData
+               + (int) ( (width-1) * ( x - xInt.minValue() ) / xwidth )
+               + width * (int) ( (height-1) * ( y - yInt.minValue() ) / ywidth ));
     }
     return val;
 
