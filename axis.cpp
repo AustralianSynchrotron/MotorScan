@@ -132,6 +132,7 @@ void Axis::setPointsEnabled(bool enab) {
 
 void Axis::setStart(double val) {
   ui->start->setValue(val);
+qDebug() << val << ui->start->value() << ui->start->minimum() << ui->start->maximum();
   startEndCh();
 }
 
