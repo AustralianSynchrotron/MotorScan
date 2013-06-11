@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>666</width>
-    <height>389</height>
+    <height>505</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,9 +140,7 @@
             </widget>
            </item>
            <item>
-            <widget class="Axis" name="yAxis" native="true">
-             <zorder>relaxYWidget</zorder>
-            </widget>
+            <widget class="Axis" name="yAxis" native="true"/>
            </item>
            <item>
             <widget class="QWidget" name="yButtons" native="true">
@@ -279,7 +277,7 @@
              <x>0</x>
              <y>0</y>
              <width>234</width>
-             <height>92</height>
+             <height>197</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -354,6 +352,9 @@
            <string>Add signal</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="Script" name="script" native="true"/>
         </item>
         <item>
          <widget class="Line" name="line_2">
@@ -606,6 +607,12 @@
    <class>Axis</class>
    <extends>QWidget</extends>
    <header>axis.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Script</class>
+   <extends>QWidget</extends>
+   <header>script.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

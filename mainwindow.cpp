@@ -727,6 +727,11 @@ void MainWindow::startScan(){
         << "# PV: \"" << sig->pv->pv() << "\"\n";
   dataStr << "#\n";
 
+  if ( ! ui->script->path().isEmpty() )
+    dataStr
+        << "# Script string: \"" << ui->script->path() << "\"\n\n";
+
+
   // reset progress
   ui->progressBar->setMaximum(totalPoints);
 
@@ -739,6 +744,9 @@ void MainWindow::startScan(){
   foreach (Signal * sig, signalsE)
     dataStr
         << "%" << sig->pv->pv() << " ";
+  if ( ! ui->script->path().isEmpty() )
+    dataStr
+        << "%Script";
   dataStr << "\n";
 
 
@@ -832,6 +840,12 @@ void MainWindow::startScan(){
         ui->dataTable->setItem(curpoint, columns[sig],
                                new QTableWidgetItem(strval));
         dataStr << strval << " ";
+      }
+      if ( ! ui->script->path().isEmpty() ) {
+        dataStr << ui->script->execute();
+        qDebug() << "=== Script out (" << curpoint+1 << "):\n" << ui->script->out();
+        qDebug() << "=== Script err (" << curpoint+1 << "):\n" << ui->script->err();
+        qDebug() << "=== End script report (" << curpoint+1 << ").";
       }
       dataStr <<  "\n";
 

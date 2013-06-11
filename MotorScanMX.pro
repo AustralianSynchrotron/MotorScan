@@ -4,16 +4,21 @@
 TARGET = MotorScanMX
 TEMPLATE = app
 CONFIG += qwt
+
 SOURCES += main.cpp \
     mainwindow.cpp \
     axis.cpp \
-    graph.cpp
+    graph.cpp \
+    script.cpp
 HEADERS += mainwindow.h \
     axis.h \
-    graph.h
+    graph.h \
+    script.h
 FORMS += mainwindow.ui \
     axis.ui \
-    graph.ui
+    graph.ui \
+    script.ui
+
 RESOURCES = scanmx.qrc
 LIBS += -lqtpv -lqtpvwidgets  -lqcamotor  -lqcamotorgui
 target.files = $$[TARGET]
