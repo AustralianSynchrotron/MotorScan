@@ -893,8 +893,8 @@ MainWindow::Signal::Signal(QWidget* parent) :
   sig(new QComboBox(parent)),
   val(new QPushButton(parent)),
   plotWin(new QMdiSubWindow(parent)),
-  scr(0),
-  pv(0),
+  scr(new Script(this)),
+  pv(new QEpicsPv(this)),
   graph(new Graph)
 {
 
@@ -909,6 +909,9 @@ MainWindow::Signal::Signal(QWidget* parent) :
   val->setFlat(true);
 
   connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setText(QString)));
+  connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue(QString)));
+  connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
+  connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
@@ -920,10 +923,8 @@ MainWindow::Signal::Signal(QWidget* parent) :
 
 
 MainWindow::Signal::~Signal() {
-  if (pv)
-    delete pv;
-  if (scr)
-    delete scr;
+  delete pv;
+  delete scr;
   delete rem;
   delete sig;
   delete val;
@@ -932,7 +933,7 @@ MainWindow::Signal::~Signal() {
 };
 
 void MainWindow::Signal::beforeGet() {
-  if (pv)
+  if (pv->isConnected())
     pv->needUpdated();
 }
 
@@ -941,15 +942,7 @@ QVariant MainWindow::Signal::get(int pos) {
 
   QVariant val=QVariant();
 
-  if (scr) {
-
-    if ( ! scr->start() )
-      return val;
-    scr->waitStop();
-
-    val = scr->out();
-
-  } if (pv) {
+  if (pv->isConnected()) {
 
     if ( ! pv->isConnected() )
       return val;
@@ -957,6 +950,14 @@ QVariant MainWindow::Signal::get(int pos) {
     val = pv->getUpdated();
     if ( ! val.isValid() )
       val = pv->get();
+
+  } else {
+
+    if ( ! scr->start() )
+      return val;
+    scr->waitStop();
+
+    val = scr->out();
 
   }
 
@@ -992,32 +993,8 @@ void MainWindow::Signal::setText(const QString & text) {
   setObjectName(text);
   emit nameChanged(text);
 
-  if ( ! scr ) {
-    scr = new Script(this);
-    connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue(QString)));
-    connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
-  }
-
-  if ( scr->setPath(text) == 0 ) {
-
-    if (pv) {
-      delete pv;
-      pv = 0;
-    }
-
-  } else {
-
-    delete scr;
-    scr=0;
-
-    if (!pv) {
-      pv = new QEpicsPv(text, this);
-      connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
-    } else {
-      pv->setPV(text);
-    }
-
-  }
+  pv->setPV(text);
+  scr->setPath(text);
 
   plotWin->setWindowTitle(text);
   graph->setTitle(text);
