@@ -477,6 +477,10 @@ void MainWindow::addSignal(const QString & pvName){
 
 
 void MainWindow::reactSignalRightClick(const QPointF &point) {
+
+  if (nowScanning())
+    return;
+
   gotoTarget = point;
 
   QString actionText = "Move motor here: ";
