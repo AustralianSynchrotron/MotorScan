@@ -39,7 +39,7 @@ private:
     Ui::MainWindow *ui;
 
     QMenu * gotoMenu;
-    double gotoTarget;
+    QPointF gotoTarget;
 
     QString qtiCommand;
     QSettings * localSettings;

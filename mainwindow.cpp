@@ -19,7 +19,7 @@ const QString MainWindow::goodStyle = QString();
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  gotoTarget(0),
+  gotoTarget(0,0),
   nowLoading(true)
 {
 
@@ -477,14 +477,35 @@ void MainWindow::addSignal(const QString & pvName){
 
 
 void MainWindow::reactSignalRightClick(const QPointF &point) {
-  qDebug() << point;
-  gotoTarget = point.x();
-  gotoMenu->actions().at(0)->setText("Move motor to " + QString::number(gotoTarget));
+  gotoTarget = point;
+
+  QString actionText = "Move motor here: ";
+  if (xAxes.isEmpty())
+    actionText += "none";
+  else if (xAxes[0]->motor->motor()->isConnected() )
+    actionText += QString::number(gotoTarget.x());
+  else
+    actionText += "no link";
+  if ( ui->scan2D->isChecked() ) {
+    actionText += ", ";
+    if (yAxes.isEmpty())
+      actionText += "none";
+    else if (yAxes[0]->motor->motor()->isConnected() )
+      actionText += QString::number(gotoTarget.y());
+    else
+      actionText += "no link";
+
+  }
+  gotoMenu->actions().at(0)->setText(actionText);
   gotoMenu->exec( QCursor::pos() );
 }
 
 void MainWindow::catchGoTo() {
-  qDebug() <<  "Travel to" << gotoTarget;
+  if ( ! xAxes.isEmpty() && xAxes[0]->motor->motor()->isConnected() )
+    xAxes[0]->motor->motor()->goUserPosition(gotoTarget.x());
+  if (  ui->scan2D->isChecked() &&
+        ! yAxes.isEmpty() && yAxes[0]->motor->motor()->isConnected() )
+    yAxes[0]->motor->motor()->goUserPosition(gotoTarget.y());
 }
 
 
