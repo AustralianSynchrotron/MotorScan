@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>505</height>
+    <width>1083</width>
+    <height>660</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -225,30 +225,6 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Relax time</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="relax">
-            <property name="suffix">
-             <string>s</string>
-            </property>
-            <property name="decimals">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <double>3600.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
          <widget class="QScrollArea" name="signalsList">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -276,8 +252,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>234</width>
-             <height>197</height>
+             <width>328</width>
+             <height>327</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -312,12 +288,24 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>PV</string>
+                  <string>PV or script</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="2">
                 <widget class="QLabel" name="label_18">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>108</width>
+                   <height>0</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Value</string>
                  </property>
@@ -352,9 +340,6 @@
            <string>Add signal</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="Script" name="script" native="true"/>
         </item>
         <item>
          <widget class="Line" name="line_2">
@@ -607,12 +592,6 @@
    <class>Axis</class>
    <extends>QWidget</extends>
    <header>axis.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Script</class>
-   <extends>QWidget</extends>
-   <header>script.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

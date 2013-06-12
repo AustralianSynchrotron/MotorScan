@@ -15,11 +15,11 @@
 #include <QMenu>
 #include <QProcess>
 #include <QComboBox>
-
 #include <qcamotorgui.h>
 
 #include "graph.h"
 #include "axis.h"
+#include "script.h"
 
 
 namespace Ui {
@@ -123,12 +123,13 @@ public:
   static QStringList knownDetectors;
   QPushButton * rem;
   QComboBox * sig;
-  QLabel * val;
-//  QTableWidgetItem * tableItem;
+  QPushButton * val;
   QMdiSubWindow * plotWin;
-  QEpicsPv * pv;
 
 private:
+
+  Script * scr;
+  QEpicsPv * pv;
 
   Line data;
   Graph * graph;
@@ -147,13 +148,17 @@ public:
 
   inline void print(QPrinter & printer) {graph->print(printer);}
 
+  void beforeGet();
   QVariant get(int pos=-1);
 
 private slots:
 
-  void setHeader(const QString & text);
-  inline void setName(const QString & name) {setObjectName(name);}
-  inline void updateValue(const QVariant & data) { val->setText(data.toString()); }
+  void setText(const QString & text);
+  void updateValue(QString data);
+  void updateValue(const QVariant & data);
+
+signals:
+  void nameChanged(const QString & myName);
 
 };
 

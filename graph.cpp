@@ -8,10 +8,46 @@
 #include <qwt_interval.h>
 #include <qwt_plot_renderer.h>
 #include <qwt_color_map.h>
+#include <qwt_picker_machine.h>
 
 #include "graph.h"
 #include "ui_graph.h"
 #include "error.h"
+
+
+
+QwtText MyPicker::trackerTextF(const QPointF &pos) const {
+  emit gimmeValue(pos);
+  QColor bg(Qt::white);
+  bg.setAlpha(200);
+  QString label = QString::number(pos.x()) + ", " + QString::number(pos.y());
+  if (!isnan(val))
+    label += ", " + QString::number(val);
+  QwtText text(label);
+  text.setBackgroundBrush( QBrush( bg ));
+  return text;
+}
+
+MyPicker::MyPicker(QwtPlotCanvas *canvas):
+  QwtPlotPicker(canvas),
+  val(0)
+{
+  setTrackerMode(AlwaysOn);
+  installEventFilter(canvas);
+}
+
+
+bool MyPicker::eventFilter(QObject * object, QEvent *event) {
+  QMouseEvent * mevent = dynamic_cast<QMouseEvent *>(event);
+  if ( object == canvas() &&
+       mevent &&
+       mevent->type() == QEvent::MouseButtonPress &&
+       mevent->button() == Qt::RightButton ) {
+    emit rightClicked(mevent->globalPos());
+    qDebug() << invTransform(mevent->globalPos());
+  }
+  return false;
+}
 
 
 
@@ -303,7 +339,7 @@ Graph::Graph(QWidget *parent) :
   ui->setupUi(this);
   ui->plot->setAutoReplot(false);
 
-  MyZoomer * zoomer = new MyZoomer(ui->plot->canvas());
+  MyPicker * zoomer = new MyPicker(ui->plot->canvas());
   connect(zoomer, SIGNAL(gimmeValue(QPointF)), SLOT(pick(QPointF)));
   ui->plot->axisWidget(QwtPlot::yRight)->setColorBarEnabled(true);
 
@@ -457,14 +493,14 @@ void Graph::print(QPrinter & printer) {
 
 void Graph::pick(const QPointF & point) {
 
-  if ( ! dynamic_cast<MyZoomer*>( sender() ) )
+  if ( ! dynamic_cast<MyPicker*>( sender() ) )
     return;
 
   double value = NAN;
   if (dynamic_cast<PlotMap*>(pdata))
     value = dynamic_cast<PlotMap*>(pdata)->value(point);
 
-  dynamic_cast<MyZoomer*>(sender())->setValue(value);
+  dynamic_cast<MyPicker*>(sender())->setValue(value);
 
 }
 

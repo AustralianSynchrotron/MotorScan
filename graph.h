@@ -7,7 +7,7 @@
 #include <qwt_plot_grid.h>
 #include <qwt_scale_engine.h>
 #include <qwt_scale_widget.h>
-#include <qwt_plot_zoomer.h>
+#include <qwt_plot_picker.h>
 #include <QDebug>
 
 #include <blitz/array.h>
@@ -19,38 +19,26 @@ typedef blitz::Array<double,2> Map;
 
 
 
-class MyZoomer: public QwtPlotZoomer {
+class MyPicker: public QwtPlotPicker {
   Q_OBJECT;
 
 private:
   double val;
 
 public:
-  MyZoomer(QwtPlotCanvas *canvas):
-    QwtPlotZoomer(canvas),
-    val(0)
-  {
-    setTrackerMode(AlwaysOn);
-  }
+  MyPicker(QwtPlotCanvas *canvas);
 
-  QwtText trackerTextF(const QPointF &pos) const {
-    emit gimmeValue(pos);
-    QColor bg(Qt::white);
-    bg.setAlpha(200);
-    QString label = QString::number(pos.x()) + ", " + QString::number(pos.y());
-    if (!isnan(val))
-      label += ", " + QString::number(val);
-    QwtText text(label);
-    text.setBackgroundBrush( QBrush( bg ));
-    return text;
-  }
+  QwtText trackerTextF(const QPointF &pos) const;
 
-  void setValue(double _val) {
-    val = _val;
-  }
+  void setValue(double _val) { val = _val; }
 
 signals:
   void gimmeValue(const QPointF &pos) const;
+  void rightClicked(QPoint pos) const;
+
+private:
+
+  bool eventFilter(QObject * object, QEvent *event);
 
 };
 

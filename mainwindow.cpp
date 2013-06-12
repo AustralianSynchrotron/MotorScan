@@ -145,7 +145,7 @@ void MainWindow::updatePlots() {
     ui->dataTable->setHorizontalHeaderItem(tablePos, tableItem);
   }
   foreach (Signal * sg, signalsE) {
-    QTableWidgetItem * tableItem = new QTableWidgetItem(sg->pv->pv());
+    QTableWidgetItem * tableItem = new QTableWidgetItem(sg->objectName());
     int tablePos = ui->dataTable->columnCount();
     columns[sg] = tablePos;
     ui->dataTable->insertColumn(tablePos);
@@ -429,7 +429,7 @@ void MainWindow::addSignal(const QString & pvName){
 
   connect(sg->rem, SIGNAL(clicked()), this, SLOT(removeSignal()));
   connect(sg->sig, SIGNAL(editTextChanged(QString)), SLOT(storeSettings()));
-  connect(sg->pv, SIGNAL(pvChanged(QString)), SLOT(updateHeaders()));
+  connect(sg, SIGNAL(nameChanged(QString)), SLOT(updateHeaders()));
 
   if ( ! ui->scan2D->isChecked() ) { // 2D
     sg->setData(&xAxisData);
@@ -602,7 +602,7 @@ void MainWindow::openQti() {
     dataStr << "Y" << i << " ";
   foreach (Signal * sig, signalsE)
     dataStr
-        << sig->pv->pv() << " ";
+        << sig->objectName() << " ";
   dataStr << "\n";
 
   for ( int y = 0 ; y < ui->dataTable->rowCount(); y++ ) {
@@ -724,13 +724,8 @@ void MainWindow::startScan(){
           << "#\n";
   foreach (Signal * sig, signalsE)
     dataStr
-        << "# PV: \"" << sig->pv->pv() << "\"\n";
+        << "# PV / script: \"" << sig->objectName() << "\"\n";
   dataStr << "#\n";
-
-  if ( ! ui->script->path().isEmpty() )
-    dataStr
-        << "# Script string: \"" << ui->script->path() << "\"\n\n";
-
 
   // reset progress
   ui->progressBar->setMaximum(totalPoints);
@@ -743,10 +738,7 @@ void MainWindow::startScan(){
       << ( ui->scan2D->isChecked() ? "%Y " : "" );
   foreach (Signal * sig, signalsE)
     dataStr
-        << "%" << sig->pv->pv() << " ";
-  if ( ! ui->script->path().isEmpty() )
-    dataStr
-        << "%Script";
+        << "%" << sig->objectName() << " ";
   dataStr << "\n";
 
 
@@ -807,10 +799,12 @@ void MainWindow::startScan(){
         xPos[ax] = ax->motor->motor()->getUserPosition();
       }
 
+      /*
       if (ui->relax->value() != 0.0 ) {
         qtWait(ui->startStop, SIGNAL(clicked()), ui->relax->value() * 1000 ); // relaxation must finish on start/stop clicked
         QApplication::processEvents(); // if start/stop was clicked the stopNow must be updated in here
       }
+      */
 
       if ( ! ui->scan2D->isChecked() )
         xAxisData(xpoint) = xPos[ui->xAxis];
@@ -834,18 +828,12 @@ void MainWindow::startScan(){
 
       updateGUI();
       foreach(Signal * sig, signalsE)
-        sig->pv->needUpdated();
+        sig->beforeGet();
       foreach(Signal * sig, signalsE) {
         QString strval = sig->get(curpoint).toString();
         ui->dataTable->setItem(curpoint, columns[sig],
                                new QTableWidgetItem(strval));
         dataStr << strval << " ";
-      }
-      if ( ! ui->script->path().isEmpty() ) {
-        dataStr << ui->script->execute();
-        qDebug() << "=== Script out (" << curpoint+1 << "):\n" << ui->script->out();
-        qDebug() << "=== Script err (" << curpoint+1 << "):\n" << ui->script->err();
-        qDebug() << "=== End script report (" << curpoint+1 << ").";
       }
       dataStr <<  "\n";
 
@@ -903,9 +891,10 @@ QStringList MainWindow::Signal::knownDetectors = QStringList();
 MainWindow::Signal::Signal(QWidget* parent) :
   rem(new QPushButton("-", parent)),
   sig(new QComboBox(parent)),
-  val(new QLabel(parent)),
+  val(new QPushButton(parent)),
   plotWin(new QMdiSubWindow(parent)),
-  pv(new QEpicsPv(this)),
+  scr(0),
+  pv(0),
   graph(new Graph)
 {
 
@@ -913,15 +902,13 @@ MainWindow::Signal::Signal(QWidget* parent) :
   sig->setDuplicatesEnabled(false);
   sig->addItems(knownDetectors);
   sig->clearEditText();
-  sig->setToolTip("PV of the signal.");
+  sig->setToolTip("PV / script");
 
   rem->setToolTip("Remove the signal.");
   val->setToolTip("Current value.");
+  val->setFlat(true);
 
-  connect(sig, SIGNAL(editTextChanged(QString)), pv, SLOT(setPV(QString)));
-  connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setHeader(QString)));
-  connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
-  connect(pv, SIGNAL(pvChanged(QString)), SLOT(setName(QString)));
+  connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setText(QString)));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
@@ -933,7 +920,10 @@ MainWindow::Signal::Signal(QWidget* parent) :
 
 
 MainWindow::Signal::~Signal() {
-  delete pv;
+  if (pv)
+    delete pv;
+  if (scr)
+    delete scr;
   delete rem;
   delete sig;
   delete val;
@@ -941,17 +931,37 @@ MainWindow::Signal::~Signal() {
   delete plotWin;
 };
 
+void MainWindow::Signal::beforeGet() {
+  if (pv)
+    pv->needUpdated();
+}
+
+
 QVariant MainWindow::Signal::get(int pos) {
 
-  if ( ! pv->isConnected() )
-    return QVariant();
+  QVariant val=QVariant();
 
-  QVariant val = pv->getUpdated();
-  if ( ! val.isValid() )
-    val = pv->get();
+  if (scr) {
 
-  double rval = val.toDouble();
+    if ( ! scr->start() )
+      return val;
+    scr->waitStop();
+
+    val = scr->out();
+
+  } if (pv) {
+
+    if ( ! pv->isConnected() )
+      return val;
+
+    val = pv->getUpdated();
+    if ( ! val.isValid() )
+      val = pv->get();
+
+  }
+
   if ( pos >= 0 && pos < data.size() ) {
+    double rval = val.toDouble();
     data(pos) = rval;
     graph->updateData(rval);
   }
@@ -977,9 +987,52 @@ void MainWindow::Signal::setData(int width, int height,
 }
 
 
-void MainWindow::Signal::setHeader(const QString & text) {
+void MainWindow::Signal::setText(const QString & text) {
+
+  setObjectName(text);
+  emit nameChanged(text);
+
+  if ( ! scr ) {
+    scr = new Script(this);
+    connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue(QString)));
+    connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
+  }
+
+  if ( scr->setPath(text) == 0 ) {
+
+    if (pv) {
+      delete pv;
+      pv = 0;
+    }
+
+  } else {
+
+    delete scr;
+    scr=0;
+
+    if (!pv) {
+      pv = new QEpicsPv(text, this);
+      connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
+    } else {
+      pv->setPV(text);
+    }
+
+  }
+
   plotWin->setWindowTitle(text);
   graph->setTitle(text);
+
 }
+
+void MainWindow::Signal::updateValue(QString data) {
+  if ( data.size() && data.at(data.size()-1) == '\n' )
+    data.chop(1);
+  val->setText(data);
+}
+
+void MainWindow::Signal::updateValue(const QVariant & data) {
+  updateValue(data.toString());
+}
+
 
 
