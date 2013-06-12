@@ -17,6 +17,7 @@
 
 
 QwtText MyPicker::trackerTextF(const QPointF &pos) const {
+  latestPos = pos;
   emit gimmeValue(pos);
   QColor bg(Qt::white);
   bg.setAlpha(200);
@@ -30,10 +31,11 @@ QwtText MyPicker::trackerTextF(const QPointF &pos) const {
 
 MyPicker::MyPicker(QwtPlotCanvas *canvas):
   QwtPlotPicker(canvas),
-  val(0)
+  val(0),
+  latestPos(0,0)
 {
   setTrackerMode(AlwaysOn);
-  installEventFilter(canvas);
+  //installEventFilter(canvas);
 }
 
 
@@ -43,12 +45,10 @@ bool MyPicker::eventFilter(QObject * object, QEvent *event) {
        mevent &&
        mevent->type() == QEvent::MouseButtonPress &&
        mevent->button() == Qt::RightButton ) {
-    emit rightClicked(mevent->globalPos());
-    qDebug() << invTransform(mevent->globalPos());
+    emit rightClicked(latestPos);
   }
-  return false;
+  return QwtPlotPicker::eventFilter(object, event);
 }
-
 
 
 
@@ -341,6 +341,7 @@ Graph::Graph(QWidget *parent) :
 
   MyPicker * zoomer = new MyPicker(ui->plot->canvas());
   connect(zoomer, SIGNAL(gimmeValue(QPointF)), SLOT(pick(QPointF)));
+  connect(zoomer, SIGNAL(rightClicked(QPointF)), SIGNAL(rightClicked(QPointF)));
   ui->plot->axisWidget(QwtPlot::yRight)->setColorBarEnabled(true);
 
   connect(ui->autoMin, SIGNAL(toggled(bool)), SLOT(updateRange()));

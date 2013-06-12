@@ -24,6 +24,7 @@ class MyPicker: public QwtPlotPicker {
 
 private:
   double val;
+  mutable QPointF latestPos;
 
 public:
   MyPicker(QwtPlotCanvas *canvas);
@@ -34,11 +35,11 @@ public:
 
 signals:
   void gimmeValue(const QPointF &pos) const;
-  void rightClicked(QPoint pos) const;
+  void rightClicked(const QPointF & pos) const;
 
-private:
+protected:
 
-  bool eventFilter(QObject * object, QEvent *event);
+virtual bool eventFilter(QObject * object, QEvent *event);
 
 };
 
@@ -84,6 +85,9 @@ private slots:
   void setLogarithmic();
   void pick(const QPointF & point);
 
+signals:
+
+  void rightClicked(const QPointF & pos) const;
 
 };
 

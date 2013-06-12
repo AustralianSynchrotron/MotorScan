@@ -6,6 +6,10 @@
 #include <QPrinter>
 #include <QDate>
 #include <QPrintDialog>
+#include<QMenu>
+#include<QCursor>
+#include <QAction>
+
 
 
 QSettings * MainWindow::globalSettings = new QSettings("/etc/scanmx", QSettings::IniFormat);
@@ -15,6 +19,7 @@ const QString MainWindow::goodStyle = QString();
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
+  gotoTarget(0),
   nowLoading(true)
 {
 
@@ -43,6 +48,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
   xAxes << ui->xAxis;
   yAxes << ui->yAxis;
+
+  // goto
+  gotoMenu = new QMenu(this);
+  QAction * action = new QAction(this);
+  gotoMenu->addAction(action);
+  connect( action, SIGNAL(triggered()), SLOT(catchGoTo()));
 
   // Check for qtiplot
   QProcess checkQti;
@@ -430,6 +441,7 @@ void MainWindow::addSignal(const QString & pvName){
   connect(sg->rem, SIGNAL(clicked()), this, SLOT(removeSignal()));
   connect(sg->sig, SIGNAL(editTextChanged(QString)), SLOT(storeSettings()));
   connect(sg, SIGNAL(nameChanged(QString)), SLOT(updateHeaders()));
+  connect(sg, SIGNAL(rightClicked(QPointF)), SLOT(reactSignalRightClick(QPointF)));
 
   if ( ! ui->scan2D->isChecked() ) { // 2D
     sg->setData(&xAxisData);
@@ -461,6 +473,23 @@ void MainWindow::addSignal(const QString & pvName){
   updatePlots();
 
 }
+
+
+
+void MainWindow::reactSignalRightClick(const QPointF &point) {
+  qDebug() << point;
+  gotoTarget = point.x();
+  gotoMenu->actions().at(0)->setText("Move motor to " + QString::number(gotoTarget));
+  gotoMenu->exec( QCursor::pos() );
+}
+
+void MainWindow::catchGoTo() {
+  qDebug() <<  "Travel to" << gotoTarget;
+}
+
+
+
+
 
 void MainWindow::removeSignal(){
 
@@ -912,6 +941,7 @@ MainWindow::Signal::Signal(QWidget* parent) :
   connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue()));
   connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
   connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue()));
+  connect(graph, SIGNAL(rightClicked(QPointF)), SIGNAL(rightClicked(QPointF)));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);

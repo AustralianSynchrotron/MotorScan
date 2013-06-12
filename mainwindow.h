@@ -13,6 +13,7 @@
 #include <QSettings>
 #include <QMdiSubWindow>
 #include <QMenu>
+#include <QCursor>
 #include <QProcess>
 #include <QComboBox>
 #include <qcamotorgui.h>
@@ -36,6 +37,9 @@ public:
 private:
 
     Ui::MainWindow *ui;
+
+    QMenu * gotoMenu;
+    double gotoTarget;
 
     QString qtiCommand;
     QSettings * localSettings;
@@ -87,8 +91,12 @@ private slots:
     void addY();
     void delY();
 
+    void reactSignalRightClick(const QPointF & point);
+
     void storeSettings();
     void loadSettings();
+
+    void catchGoTo();
 
 
 };
@@ -158,6 +166,7 @@ private slots:
 
 signals:
   void nameChanged(const QString & myName);
+  void rightClicked(const QPointF & point);
 
 };
 
