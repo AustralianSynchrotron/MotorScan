@@ -154,8 +154,7 @@ public:
 private slots:
 
   void setText(const QString & text);
-  void updateValue(QString data);
-  void updateValue(const QVariant & data);
+  void updateValue();
 
 signals:
   void nameChanged(const QString & myName);

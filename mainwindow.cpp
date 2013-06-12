@@ -909,9 +909,9 @@ MainWindow::Signal::Signal(QWidget* parent) :
   val->setFlat(true);
 
   connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setText(QString)));
-  connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue(QString)));
+  connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue()));
   connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
-  connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue(QVariant)));
+  connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue()));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
@@ -1001,15 +1001,14 @@ void MainWindow::Signal::setText(const QString & text) {
 
 }
 
-void MainWindow::Signal::updateValue(QString data) {
-  if ( data.size() && data.at(data.size()-1) == '\n' )
-    data.chop(1);
-  val->setText(data);
+void MainWindow::Signal::updateValue() {
+  if (pv->isConnected())
+    val->setText(pv->get().toString());
+  else
+    val->setText(scr->out());
+
 }
 
-void MainWindow::Signal::updateValue(const QVariant & data) {
-  updateValue(data.toString());
-}
 
 
 

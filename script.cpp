@@ -67,7 +67,11 @@ int Script::waitStop() {
 void Script::onState(QProcess::ProcessState state) {
   if (state==QProcess::NotRunning) {
     lastErr = proc.readAllStandardError();
+    if( lastErr.size() && lastErr.at(lastErr.size()-1) == '\n' )
+      lastErr.chop(1);
     lastOut = proc.readAllStandardOutput();
+    if( lastOut.size() && lastOut.at(lastOut.size()-1) == '\n' )
+      lastOut.chop(1);
     emit finished(proc.exitCode());
     emit outChanged( lastOut );
 
