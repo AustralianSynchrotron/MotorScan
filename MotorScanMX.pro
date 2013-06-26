@@ -16,8 +16,7 @@ HEADERS += mainwindow.h \
     script.h
 FORMS += mainwindow.ui \
     axis.ui \
-    graph.ui \
-    script.ui
+    graph.ui
 
 RESOURCES = scanmx.qrc
 LIBS += -lqtpv -lqtpvwidgets  -lqcamotor  -lqcamotorgui

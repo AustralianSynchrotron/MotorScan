@@ -961,6 +961,7 @@ MainWindow::Signal::Signal(QWidget* parent) :
   rem->setToolTip("Remove the signal.");
   val->setToolTip("Current value.");
   val->setFlat(true);
+  val->setStyleSheet("text-align: left");
 
   connect(sig, SIGNAL(editTextChanged(QString)), SLOT(setText(QString)));
   connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue()));
