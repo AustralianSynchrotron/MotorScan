@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Restore global settings
   Signal::knownDetectors.clear();
-  QFile detFile("/etc/listOfSignals.txt");
+  QFile detFile("/etc/listOfSignals.txt"); // file comes from the TimeScanMX package
   if ( detFile.open(QIODevice::ReadOnly | QIODevice::Text) &&
        detFile.isReadable() )
     while ( !detFile.atEnd() ) {
