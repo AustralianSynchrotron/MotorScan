@@ -38,8 +38,9 @@ private:
 
     Ui::MainWindow *ui;
 
-    QMenu * gotoMenu;
-    QPointF gotoTarget;
+    QMenu * contextMenu;
+    QPointF contextPos;
+    double contextVal;
 
     QString qtiCommand;
     QSettings * localSettings;
@@ -67,8 +68,8 @@ private:
 
     static void updateGUI();
 
-    Line xAxisData;
-    Line yAxisData;
+    QVector<double> xAxisData;
+    QVector<double> yAxisData;
 
 private slots:
 
@@ -91,12 +92,16 @@ private slots:
     void addY();
     void delY();
 
-    void reactSignalRightClick(const QPointF & point);
+    void reactSignalRightClick(const QPointF & point, double val);
 
     void storeSettings();
     void loadSettings();
 
     void catchGoTo();
+    void catchCopyPosition();
+    void catchCopyValue();
+
+
 
 
 };
@@ -139,7 +144,8 @@ private:
   Script * scr;
   QEpicsPv * pv;
 
-  Line data;
+  double * data;
+  size_t size;
   Graph * graph;
   static CloseFilter * closeFilt;
   int point;
@@ -149,7 +155,7 @@ public:
   Signal(QWidget* parent=0);
   ~Signal();
 
-  void setData(Line * xData);
+  void setData(int width, double xStart, double xEnd);
   void setData(int width, int height,
                double xStart, double xEnd,
                double yStart, double yEnd);
@@ -166,7 +172,7 @@ private slots:
 
 signals:
   void nameChanged(const QString & myName);
-  void rightClicked(const QPointF & point);
+  void rightClicked(const QPointF & point, double val);
 
 };
 

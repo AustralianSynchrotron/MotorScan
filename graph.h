@@ -13,8 +13,8 @@
 #include <blitz/array.h>
 
 
-typedef blitz::Array<double,1> Line;
-typedef blitz::Array<double,2> Map;
+//typedef blitz::Array<double,1> Line;
+//typedef blitz::Array<double,2> Map;
 
 
 
@@ -31,11 +31,12 @@ public:
 
   QwtText trackerTextF(const QPointF &pos) const;
 
-  void setValue(double _val) { val = _val; }
+  void setValue(double _val) {val = _val;}
+  double value() const {return val;}
 
 signals:
   void gimmeValue(const QPointF &pos) const;
-  void rightClicked(const QPointF & pos) const;
+  void rightClicked(const QPointF & pos, double val) const;
 
 protected:
 
@@ -68,8 +69,8 @@ public:
   explicit Graph(QWidget *parent = 0);
   ~Graph();
 
-  void changePlot(const double * xData, const double * yData, int size);
-  void changePlot(const double * zData, int width, int height,
+  double * changePlot(const QVector<double> & yData, double xStart, double xEnd);
+  double * changePlot(const QVector<double> & zData, int width,
                   double xStart, double xEnd,
                   double yStart, double yEnd);
   void updateData(double point);
@@ -87,7 +88,7 @@ private slots:
 
 signals:
 
-  void rightClicked(const QPointF & pos) const;
+  void rightClicked(const QPointF & pos, double val) const;
 
 };
 

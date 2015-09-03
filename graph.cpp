@@ -10,10 +10,11 @@
 #include <qwt_color_map.h>
 #include <qwt_picker_machine.h>
 
+#include <qwt_matrix_raster_data.h>
+
 #include "graph.h"
 #include "ui_graph.h"
 #include "error.h"
-
 
 
 QwtText MyPicker::trackerTextF(const QPointF &pos) const {
@@ -21,12 +22,13 @@ QwtText MyPicker::trackerTextF(const QPointF &pos) const {
   emit gimmeValue(pos);
   QColor bg(Qt::white);
   bg.setAlpha(200);
-  QString label = QString::number(pos.x()) + ", " + QString::number(pos.y());
+  QString label = QString("<html><head/><body><p>%1, %2").arg(pos.x()).arg(pos.y());
   if (!isnan(val))
-    label += ", " + QString::number(val);
+    label += QString(" : <span style=\" font-weight:600;\">%3</span></p></body></html>").arg(val);
   QwtText text(label);
   text.setBackgroundBrush( QBrush( bg ));
   return text;
+
 }
 
 MyPicker::MyPicker(QwtPlotCanvas *canvas):
@@ -45,7 +47,7 @@ bool MyPicker::eventFilter(QObject * object, QEvent *event) {
        mevent &&
        mevent->type() == QEvent::MouseButtonPress &&
        mevent->button() == Qt::RightButton ) {
-    emit rightClicked(latestPos);
+    emit rightClicked(latestPos, val);
   }
   return QwtPlotPicker::eventFilter(object, event);
 }
@@ -57,25 +59,17 @@ protected:
 
   double _min;
   double _max;
+  double * _data;
+  double _size;
 
-  PlotData() : _min(NAN), _max(NAN) {}
-
-  void updateData(const double * data, int size) {
-    _min = NAN;
-    _max = NAN;
-    for (int idx=0 ; idx<size ; idx++) {
-      double point = *(data+idx);
-      if ( ! isnan(point) ) {
-        if ( isnan(_min) || point < _min) _min = point;
-        if ( isnan(_max) || point > _max) _max = point;
-      }
-    }
-  }
+  PlotData() : _min(NAN), _max(NAN), _data(0), _size(0) {}
 
 public:
 
   double min() const {return _min;}
   double max() const {return _max;}
+  double * data() const {return _data;}
+  size_t size() const {return _size;}
 
   QwtInterval interval() const {
     QwtInterval nint(_min,_max);
@@ -92,7 +86,19 @@ public:
     return nint;
   }
 
-  virtual void updateData() = 0;
+
+  virtual void updateData() {
+    _min = NAN;
+    _max = NAN;
+    for (int idx=0 ; idx<_size ; idx++) {
+      double point = *(_data+idx);
+      if ( ! isnan(point) ) {
+        if ( isnan(_min) || point < _min) _min = point;
+        if ( isnan(_max) || point > _max) _max = point;
+      }
+    }
+  }
+
 
   virtual bool updateData(double point) {
     if ( isnan(point) )
@@ -118,24 +124,17 @@ public:
 
 class PlotLine : public QwtPlotCurve, public PlotData {
 private:
-  int size;
-  const double * xData;
-  const double * yData;
+  QwtPointArrayData * arrayData;
 
 public :
 
   QwtPlotGrid * grid;
 
-  PlotLine(const double * _xData, const double * _yData, int _size) :
+  PlotLine(const QVector<double> & _yData, double xStart, double xEnd) :
     QwtPlotCurve(),
     PlotData(),
-    size(_size),
-    xData(_xData),
-    yData(_yData)
+    grid(new QwtPlotGrid)
   {
-
-    if ( ! _xData || ! _yData || ! _size )
-      throw_error("Zero sized or nonequal XY-data", "Graph");
 
     setPen(QPen(QColor(255,0,0)));
     setStyle(QwtPlotCurve::Lines);
@@ -145,13 +144,19 @@ public :
     setPaintAttribute(QwtPlotCurve::ClipPolygons);
     setPaintAttribute(QwtPlotCurve::CacheSymbols);
 
-    updateData();
-
-    grid = new QwtPlotGrid;
     grid->enableXMin(true);
     grid->enableYMin(true);
     grid->setMajPen(Qt::DashLine);
     grid->setMinPen(Qt::DotLine);
+
+    _size = _yData.size();
+    QVector<double> xData(_size);
+    for (int icur=0 ; icur < _size ; icur++)
+      xData[icur] = xStart + icur*(xEnd-xStart)/(_size-1);
+    arrayData = new QwtPointArrayData( xData, _yData);
+    setData(arrayData);
+    _data = const_cast<double *>( arrayData->yData().data() );
+    updateData();
 
   }
 
@@ -159,25 +164,41 @@ public :
   ~PlotLine() {
     grid->detach();
     delete grid;
+  //  delete arrayData;
   }
 
   void updateData() {
-    PlotData::updateData(yData, size);
-    int idx=0;
-    while ( idx < size && ! isnan(*(yData+idx)) )
-      idx++;
-    setRawSamples(xData, yData, idx);
+    PlotData::updateData();
+    QRectF bnd = arrayData->boundingRect();
+    bnd.setBottom(min());
+    bnd.setTop(max());
+    arrayData->setRectOfInterest(bnd);
   }
 
   bool updateData(double point) {
     bool ret = PlotData::updateData(point);
     int idx=0;
-    while ( idx < size && ! isnan(*(yData+idx)) )
+    while ( idx < _size && ! isnan(*( _data+idx)) )
       idx++;
     ret |= ( (int) dataSize() != idx );
-    if (ret)
-      setRawSamples(xData, yData, idx);
+    if (ret) {
+      QRectF bnd = arrayData->boundingRect();
+      bnd.setBottom(min());
+      bnd.setTop(max());
+      arrayData->setRectOfInterest(bnd);
+    }
     return ret;
+  }
+
+  double value(double pos) {
+    if (_size<1)
+      return NAN;
+    const double xStart = arrayData->xData().front();
+    const double xEnd   = arrayData->xData().back();
+    if ( pos < qMin(xStart, xEnd) || pos > qMax(xStart, xEnd) )
+      return NAN;
+    int idx = (_size-1) * ( pos - xStart ) / (xEnd - xStart);
+    return arrayData->yData().at(idx);
   }
 
 };
@@ -188,7 +209,7 @@ public :
 
 
 
-class MapRasterData : public QwtRasterData {
+class MapRasterDataOrig : public QwtRasterData {
 
 public:
 
@@ -196,7 +217,7 @@ public:
   int height;
   const double * zData;
 
-  MapRasterData(const double * _zData, int _width, int _height,
+  MapRasterDataOrig(const double * _zData, int _width, int _height,
                 double xStart, double xEnd,
                 double yStart, double yEnd) :
     width(_width),
@@ -255,38 +276,79 @@ public:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class PlotMap : public QwtPlotSpectrogram, public PlotData {
 private:
-  MapRasterData * rastData;
+  QwtMatrixRasterData * arrayData;
+
 public :
 
-  PlotMap(const double * _zData, int _width, int _height,
+  PlotMap(const QVector<double> & _zData, int _width,
           double xStart, double xEnd,
           double yStart, double yEnd) :
     QwtPlotSpectrogram(),
     PlotData(),
-    rastData(new MapRasterData(_zData, _width, _height,
-                               xStart, xEnd, yStart, yEnd) )
+    arrayData(new QwtMatrixRasterData)
   {
     setRenderThreadCount(0); // use system specific thread count
     setColorMap(new QwtLinearColorMap);
-    setData(rastData);
+
+    arrayData->setInterval(Qt::XAxis, QwtInterval(xStart, xEnd));
+    arrayData->setInterval(Qt::YAxis, QwtInterval(yStart, yEnd));
+    arrayData->setValueMatrix(_zData, _width);
+    setData(arrayData);
     updateData();
+    _data = const_cast<double *>( arrayData->valueMatrix().data() );
+    _size = _zData.size();
+  }
+
+  ~PlotMap() {
+//    delete arrayData;
   }
 
   void setPlotInterval(QwtInterval & interval) {
-    rastData->setInterval(Qt::ZAxis, interval);
+    arrayData->setInterval(Qt::ZAxis, interval);
   }
 
   void updateData() {
-    PlotData::updateData(rastData->zData, rastData->width * rastData->height);
+    PlotData::updateData();
   }
 
   double value(const QPointF & pos) {
-    return rastData->value(pos.x(),pos.y());
+    return arrayData->value(pos.x(),pos.y());
   }
 
 };
+
+
+
+
+
+
+
+
 
 class LogColorMap : public QwtLinearColorMap {
 
@@ -341,7 +403,7 @@ Graph::Graph(QWidget *parent) :
 
   MyPicker * zoomer = new MyPicker(ui->plot->canvas());
   connect(zoomer, SIGNAL(gimmeValue(QPointF)), SLOT(pick(QPointF)));
-  connect(zoomer, SIGNAL(rightClicked(QPointF)), SIGNAL(rightClicked(QPointF)));
+  connect(zoomer, SIGNAL(rightClicked(QPointF, double)), SIGNAL(rightClicked(QPointF, double)));
   ui->plot->axisWidget(QwtPlot::yRight)->setColorBarEnabled(true);
 
   connect(ui->autoMin, SIGNAL(toggled(bool)), SLOT(updateRange()));
@@ -367,34 +429,32 @@ void Graph::changePlot() {
   }
 }
 
-void Graph::changePlot(const double * xData, const double * yData, int size) {
-  if ( ! xData || ! yData )
-    throw_error("Bad data for curve plot", "Graph");
+double * Graph::changePlot(const QVector<double> & yData, double xStart, double xEnd) {
   changePlot();
-  PlotLine * curve = new PlotLine(xData, yData, size);
-  pdata = curve;
+  pdata = new PlotLine(yData, xStart, xEnd);
   ui->plot->enableAxis(QwtPlot::yRight, false);
-  ui->plot->setAxisScale(QwtPlot::xBottom, *xData, *(xData+size-1) );
-  curve->attach(ui->plot);
+  ui->plot->setAxisScale(QwtPlot::xBottom, xStart, xEnd);
+  dynamic_cast<PlotLine*>(pdata)->attach(ui->plot);
   updateData();
+  return pdata->data();
 }
 
 
 
-void Graph::changePlot(const double * zData, int width, int height,
+double * Graph::changePlot(const QVector<double> & zData, int width,
                        double xStart, double xEnd,
                        double yStart, double yEnd)  {
-  if ( ! zData || width <= 0 || height <= 0 )
+  if ( ! zData.size() || width <= 0 || zData.size()%width )
     throw_error("Bad data for map plot", "Graph");
   changePlot();
-  PlotMap * map = new PlotMap(zData, width, height, xStart, xEnd, yStart, yEnd);
-  pdata = map;
+  pdata = new PlotMap(zData, width, xStart, xEnd, yStart, yEnd);
   ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLinearScaleEngine);
   ui->plot->setAxisScale(QwtPlot::yLeft, yStart, yEnd );
   ui->plot->setAxisScale(QwtPlot::xBottom, xStart, xEnd );
   ui->plot->enableAxis(QwtPlot::yRight, true);
-  map->attach(ui->plot);
+  dynamic_cast<PlotMap*>(pdata)->attach(ui->plot);
   updateData();
+  return pdata->data();
 }
 
 
@@ -497,9 +557,11 @@ void Graph::pick(const QPointF & point) {
   if ( ! dynamic_cast<MyPicker*>( sender() ) )
     return;
 
-  double value = NAN;
+  double value=NAN;
   if (dynamic_cast<PlotMap*>(pdata))
     value = dynamic_cast<PlotMap*>(pdata)->value(point);
+  else if (dynamic_cast<PlotLine*>(pdata))
+    value = dynamic_cast<PlotLine*>(pdata)->value(point.x());
 
   dynamic_cast<MyPicker*>(sender())->setValue(value);
 

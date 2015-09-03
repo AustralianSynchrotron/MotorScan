@@ -9,6 +9,7 @@
 #include<QMenu>
 #include<QCursor>
 #include <QAction>
+#include <QClipboard>
 
 
 
@@ -19,7 +20,8 @@ const QString MainWindow::goodStyle = QString();
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  gotoTarget(0,0),
+  contextPos(NAN,NAN),
+  contextVal(NAN),
   nowLoading(true)
 {
 
@@ -49,11 +51,19 @@ MainWindow::MainWindow(QWidget *parent) :
   xAxes << ui->xAxis;
   yAxes << ui->yAxis;
 
-  // goto
-  gotoMenu = new QMenu(this);
-  QAction * action = new QAction(this);
-  gotoMenu->addAction(action);
+  // context menue
+  contextMenu = new QMenu(this);
+  QAction * action;
+
+  action = contextMenu->addAction("move here");
   connect( action, SIGNAL(triggered()), SLOT(catchGoTo()));
+
+  action = contextMenu->addAction("copy position");
+  connect( action, SIGNAL(triggered()), SLOT(catchCopyPosition()));
+
+  action = contextMenu->addAction("copy value");
+  connect( action, SIGNAL(triggered()), SLOT(catchCopyValue()));
+
 
   // Check for qtiplot
   QProcess checkQti;
@@ -114,14 +124,13 @@ void MainWindow::updatePlots() {
   }
 
   for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ )
-    xAxisData(xpoint) = xStart + ( xpoint * ( xEnd - xStart ) ) / (xPoints - 1);
-
+    xAxisData[xpoint] = xStart + ( xpoint * ( xEnd - xStart ) ) / (xPoints - 1);
 
   if ( ! ui->scan2D->isChecked() ) { // 2D
     yAxisData.resize(1);
-    yAxisData=0;
+    yAxisData.fill(0);
     foreach (Signal * sig, signalsE)
-      sig->setData(&xAxisData);
+      sig->setData(xAxisData.size(), xStart, xEnd);
   } else { // 3D
 
     const int yPoints = ui->yAxis->points();
@@ -136,7 +145,7 @@ void MainWindow::updatePlots() {
     }
 
     for( int ypoint = 0 ; ypoint < yPoints ; ypoint++ )
-      yAxisData(ypoint) = yStart + ( ypoint * ( yEnd - yStart ) ) / (yPoints - 1);
+      yAxisData[ypoint] = yStart + ( ypoint * ( yEnd - yStart ) ) / (yPoints - 1);
 
     foreach (Signal * sig, signalsE)
       sig->setData(xPoints, yPoints, xStart, xEnd, yStart, yEnd);
@@ -441,19 +450,19 @@ void MainWindow::addSignal(const QString & pvName){
   connect(sg->rem, SIGNAL(clicked()), this, SLOT(removeSignal()));
   connect(sg->sig, SIGNAL(editTextChanged(QString)), SLOT(storeSettings()));
   connect(sg, SIGNAL(nameChanged(QString)), SLOT(updateHeaders()));
-  connect(sg, SIGNAL(rightClicked(QPointF)), SLOT(reactSignalRightClick(QPointF)));
+  connect(sg, SIGNAL(rightClicked(QPointF, double)), SLOT(reactSignalRightClick(QPointF, double)));
+
+  double xStart = ui->xAxis->start();
+  double xEnd = ui->xAxis->end();
+  if (ui->xAxis->mode() == Axis::REL) {
+    const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
+    xStart += xInitPos;
+    xEnd += xInitPos;
+  }
 
   if ( ! ui->scan2D->isChecked() ) { // 2D
-    sg->setData(&xAxisData);
+    sg->setData(xAxisData.size(), xStart, xEnd);
   } else { // 3D
-
-    double xStart = ui->xAxis->start();
-    double xEnd = ui->xAxis->end();
-    if (ui->xAxis->mode() == Axis::REL) {
-      const double xInitPos = ui->xAxis->motor->motor()->getUserPosition();
-      xStart += xInitPos;
-      xEnd += xInitPos;
-    }
 
     double yStart = ui->yAxis->start();
     double yEnd = ui->yAxis->end();
@@ -476,40 +485,52 @@ void MainWindow::addSignal(const QString & pvName){
 
 
 
-void MainWindow::reactSignalRightClick(const QPointF &point) {
+void MainWindow::reactSignalRightClick(const QPointF &point, double val) {
 
-  if (nowScanning())
-    return;
+  contextPos = point;
+  contextVal = val;
+  QString positionText;
+  if ( ! xAxes.isEmpty()  &&  ! isnan(point.x()) )
+    positionText += QString::number(point.x());
+  if ( ui->scan2D->isChecked() && ! yAxes.isEmpty()  &&  ! isnan(point.y()) )
+       positionText += ", " + QString::number(point.y());
 
-  gotoTarget = point;
+  contextMenu->actions().at(0)->setText( QString() +
+        "Move motor" + ( ui->scan2D->isChecked() ? "s" : "") + " here: " + positionText);
+  contextMenu->actions().at(0)->setEnabled( ! nowScanning()  &&  (
+                                        xAxes[0]->motor->motor()->isConnected()
+      || ( ui->scan2D->isChecked()  &&  yAxes[0]->motor->motor()->isConnected()) ) );
+  contextMenu->actions().at(1)->setText("Copy position: " + positionText);
+  contextMenu->actions().at(2)->setText("Copy value: " + QString::number(val));
 
-  QString actionText = "Move motor here: ";
-  if (xAxes.isEmpty())
-    actionText += "none";
-  else if (xAxes[0]->motor->motor()->isConnected() )
-    actionText += QString::number(gotoTarget.x());
-  else
-    actionText += "no link";
-  if ( ui->scan2D->isChecked() ) {
-    actionText += ", ";
-    if (yAxes.isEmpty())
-      actionText += "none";
-    else if (yAxes[0]->motor->motor()->isConnected() )
-      actionText += QString::number(gotoTarget.y());
-    else
-      actionText += "no link";
+  contextMenu->exec( QCursor::pos() );
 
-  }
-  gotoMenu->actions().at(0)->setText(actionText);
-  gotoMenu->exec( QCursor::pos() );
 }
 
 void MainWindow::catchGoTo() {
+  if (nowScanning())
+    return;
   if ( ! xAxes.isEmpty() && xAxes[0]->motor->motor()->isConnected() )
-    xAxes[0]->motor->motor()->goUserPosition(gotoTarget.x());
+    xAxes[0]->motor->motor()->goUserPosition(contextPos.x());
   if (  ui->scan2D->isChecked() &&
         ! yAxes.isEmpty() && yAxes[0]->motor->motor()->isConnected() )
-    yAxes[0]->motor->motor()->goUserPosition(gotoTarget.y());
+    yAxes[0]->motor->motor()->goUserPosition(contextPos.y());
+}
+
+
+void MainWindow::catchCopyPosition() {
+  QString forClip;
+  if ( ! xAxes.isEmpty() )
+    forClip += QString::number(contextPos.x());
+  if (  ui->scan2D->isChecked() && ! yAxes.isEmpty() )
+    forClip += ", " + QString::number(contextPos.y());
+  if ( ! forClip.isEmpty() )
+    QApplication::clipboard()->setText(forClip);
+}
+
+void MainWindow::catchCopyValue() {
+  if ( ! isnan(contextVal) )
+    QApplication::clipboard()->setText(QString::number(contextVal));
 }
 
 
@@ -861,7 +882,7 @@ void MainWindow::startScan(){
       */
 
       if ( ! ui->scan2D->isChecked() )
-        xAxisData(xpoint) = xPos[ui->xAxis];
+        xAxisData[xpoint] = xPos[ui->xAxis];
 
       updateGUI();
       if ( stopNow )
@@ -967,7 +988,7 @@ MainWindow::Signal::Signal(QWidget* parent) :
   connect(scr, SIGNAL(outChanged(QString)), SLOT(updateValue()));
   connect(val, SIGNAL(clicked()), scr, SLOT(execute()));
   connect(pv, SIGNAL(valueUpdated(QVariant)), SLOT(updateValue()));
-  connect(graph, SIGNAL(rightClicked(QPointF)), SIGNAL(rightClicked(QPointF)));
+  connect(graph, SIGNAL(rightClicked(QPointF, double)), SIGNAL(rightClicked(QPointF, double)));
 
   plotWin->installEventFilter(closeFilt);
   plotWin->setWidget(graph);
@@ -1017,9 +1038,9 @@ QVariant MainWindow::Signal::get(int pos) {
 
   }
 
-  if ( pos >= 0 && pos < data.size() ) {
+  if ( pos >= 0 && pos < size ) {
     double rval = val.toDouble();
-    data(pos) = rval;
+    *(data + pos) = rval;
     graph->updateData(rval);
   }
 
@@ -1027,20 +1048,24 @@ QVariant MainWindow::Signal::get(int pos) {
 
 }
 
-void MainWindow::Signal::setData(Line * xData) {
+void MainWindow::Signal::setData(int width, double xStart, double xEnd) {
   point = 0;
-  data.resize(xData->size());
-  data=NAN;
-  graph->changePlot(xData->data(), data.data(), xData->size());
+  size = width;
+  QVector<double> dd;
+  dd.resize(size);
+  dd.fill(NAN);
+  data = graph->changePlot(dd, xStart, xEnd);
 }
 
 void MainWindow::Signal::setData(int width, int height,
                     double xStart, double xEnd,
                     double yStart, double yEnd) {
   point = 0;
-  data.resize(width*height);
-  data=NAN;
-  graph->changePlot(data.data(), width, height, xStart, xEnd, yStart, yEnd);
+  size=width*height;
+  QVector<double> dd;
+  dd.resize(size);
+  dd.fill(NAN);
+  data = graph->changePlot(dd, width, xStart, xEnd, yStart, yEnd);
 }
 
 
