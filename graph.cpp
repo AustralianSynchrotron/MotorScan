@@ -195,7 +195,7 @@ public :
       return NAN;
     const double xStart = arrayData->xData().front();
     const double xEnd   = arrayData->xData().back();
-    if ( pos < qMin(xStart, xEnd) || pos > qMax(xStart, xEnd) )
+    if ( _size < 1  ||  xStart == xEnd  ||  pos < qMin(xStart, xEnd)  ||  pos > qMax(xStart, xEnd) )
       return NAN;
     int idx = (_size-1) * ( pos - xStart ) / (xEnd - xStart);
     return arrayData->yData().at(idx);
