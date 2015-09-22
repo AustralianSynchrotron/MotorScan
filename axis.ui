@@ -50,6 +50,9 @@
      <property name="toolTip">
       <string>Start point of the scan</string>
      </property>
+     <property name="decimals">
+      <number>9</number>
+     </property>
      <property name="minimum">
       <double>-2147483647.000000000000000</double>
      </property>
@@ -92,6 +95,9 @@
      <property name="toolTip">
       <string>Step size</string>
      </property>
+     <property name="decimals">
+      <number>9</number>
+     </property>
      <property name="minimum">
       <double>-2147483647.000000000000000</double>
      </property>
@@ -121,6 +127,9 @@
      <property name="toolTip">
       <string>End point of the scan</string>
      </property>
+     <property name="decimals">
+      <number>9</number>
+     </property>
      <property name="minimum">
       <double>-2147483647.000000000000000</double>
      </property>
@@ -146,6 +155,9 @@
     <widget class="QMDoubleSpinBox" name="width">
      <property name="toolTip">
       <string>Scan width</string>
+     </property>
+     <property name="decimals">
+      <number>9</number>
      </property>
      <property name="minimum">
       <double>-2147483647.000000000000000</double>
