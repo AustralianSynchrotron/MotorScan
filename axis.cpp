@@ -16,10 +16,10 @@ Axis::Axis(QWidget *parent) :
   connect(motor->motor(), SIGNAL(changedPv()), SLOT(setName()));
   connect(motor->motor(), SIGNAL(changedConnected(bool)), SLOT(setConnected(bool)));
   connect(motor->motor(), SIGNAL(changedMoving(bool)), SIGNAL(statusChanged()));
-  connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->start, SLOT(setMin(double)));
-  connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->start, SLOT(setMax(double)));
-  connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->end, SLOT(setMin(double)));
-  connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->end, SLOT(setMax(double)));
+  //connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->start, SLOT(setMin(double)));
+  //connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->start, SLOT(setMax(double)));
+  //connect(motor->motor(), SIGNAL(changedUserLoLimit(double)),  ui->end, SLOT(setMin(double)));
+  //connect(motor->motor(), SIGNAL(changedUserHiLimit(double)),  ui->end, SLOT(setMax(double)));
   connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->end, SLOT(setPrec(int)));
   connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->step, SLOT(setPrec(int)));
   connect(motor->motor(), SIGNAL(changedPrecision(int)),       ui->width, SLOT(setPrec(int)));
