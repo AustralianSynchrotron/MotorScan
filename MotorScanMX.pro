@@ -4,6 +4,7 @@
 TARGET = MotorScanMX
 TEMPLATE = app
 CONFIG += qwt
+QT += widgets printsupport
 
 SOURCES += main.cpp \
     mainwindow.cpp \

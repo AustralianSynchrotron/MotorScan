@@ -38,7 +38,11 @@ int Script::evaluate() {
     return -1;
 
   fileExec.resize(0);
+  #if QT_VERSION >= 0x050000
+  fileExec.write( pth.toLatin1() );
+  #else
   fileExec.write( pth.toAscii() );
+  #endif
   fileExec.flush();
 
   QProcess tempproc;

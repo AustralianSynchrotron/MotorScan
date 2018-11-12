@@ -1,14 +1,15 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-
 #include <qwt_plot_spectrogram.h>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
 #include <qwt_scale_engine.h>
 #include <qwt_scale_widget.h>
 #include <qwt_plot_picker.h>
+#include <qwt_plot_canvas.h>
 #include <QDebug>
+#include <QPrinter>
 
 #include <blitz/array.h>
 
@@ -27,7 +28,7 @@ private:
   mutable QPointF latestPos;
 
 public:
-  MyPicker(QwtPlotCanvas *canvas);
+  MyPicker(QWidget *canvas);
 
   QwtText trackerTextF(const QPointF &pos) const;
 

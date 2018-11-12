@@ -7,8 +7,11 @@
 #include <qwt_symbol.h>
 #include <qwt_interval.h>
 #include <qwt_plot_renderer.h>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_grid.h>
 #include <qwt_color_map.h>
 #include <qwt_picker_machine.h>
+#include <qwt_point_data.h>
 
 #include <qwt_matrix_raster_data.h>
 
@@ -31,7 +34,7 @@ QwtText MyPicker::trackerTextF(const QPointF &pos) const {
 
 }
 
-MyPicker::MyPicker(QwtPlotCanvas *canvas):
+MyPicker::MyPicker(QWidget *canvas):
   QwtPlotPicker(canvas),
   val(0),
   latestPos(0,0)
@@ -142,12 +145,16 @@ public :
     symbol->setSize(8);
     setSymbol(symbol);
     setPaintAttribute(QwtPlotCurve::ClipPolygons);
-    setPaintAttribute(QwtPlotCurve::CacheSymbols);
+  //  setPaintAttribute(QwtPlotCurve::CacheSymbols);
 
     grid->enableXMin(true);
     grid->enableYMin(true);
-    grid->setMajPen(Qt::DashLine);
-    grid->setMinPen(Qt::DotLine);
+    QPen pen=grid->majorPen();
+    pen.setStyle(Qt::DashLine);
+    grid->setMajorPen(pen);
+    pen=grid->minorPen();    
+    pen.setStyle(Qt::DotLine);
+    grid->setMinorPen(pen);
 
     _size = _yData.size();
     QVector<double> xData(_size);
@@ -226,7 +233,7 @@ public:
 
   {
 
-    if ( ! zData || ! width*height )
+    if ( ! zData || ! (width*height) )
       throw_error("No or zero-sized data", "PlotMap");
 
     if (xStart == xEnd) {
@@ -454,6 +461,8 @@ double * Graph::changePlot(const QVector<double> & zData, int width,
   ui->plot->enableAxis(QwtPlot::yRight, true);
   dynamic_cast<PlotMap*>(pdata)->attach(ui->plot);
   updateData();
+  if (ui->showGrid->isChecked())
+    showGrid();
   return pdata->data();
 }
 
@@ -515,7 +524,7 @@ void Graph::showGrid() {
       dynamic_cast<PlotLine*>(pdata)->grid->detach();
   } else if (dynamic_cast<PlotMap*>(pdata)) {
     const QList<double> & contourLevels = ui->plot->axisScaleDiv(QwtPlot::yRight)
-        ->ticks(QwtScaleDiv::MajorTick);
+        .ticks(QwtScaleDiv::MajorTick);
     dynamic_cast<PlotMap*>(pdata)->setContourLevels(contourLevels);
     dynamic_cast<PlotMap*>(pdata)->setDisplayMode(QwtPlotSpectrogram::ContourMode,
                                                   ui->showGrid->isChecked());
@@ -527,14 +536,14 @@ void Graph::showGrid() {
 void Graph::setLogarithmic() {
   if( dynamic_cast<PlotLine*>(pdata) ) {
     if (ui->logY->isChecked())
-      ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
+      ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine);
     else
       ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLinearScaleEngine);
   } else if (dynamic_cast<PlotMap*>(pdata)) {
     QwtColorMap * cmap = ui->logY->isChecked() ? new LogColorMap : new QwtLinearColorMap;
     dynamic_cast<PlotMap*>(pdata)->setColorMap(cmap);
     if (ui->logY->isChecked())
-      ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLog10ScaleEngine);
+      ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLogScaleEngine);
     else
       ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLinearScaleEngine);
   }
