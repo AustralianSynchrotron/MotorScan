@@ -28,7 +28,11 @@ private:
   mutable QPointF latestPos;
 
 public:
+  #if QWT_VERSION >= 0x061000
   MyPicker(QWidget *canvas);
+  #else
+  MyPicker(QwtPlotCanvas *canvas);
+  #endif
 
   QwtText trackerTextF(const QPointF &pos) const;
 

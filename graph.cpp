@@ -11,9 +11,12 @@
 #include <qwt_plot_grid.h>
 #include <qwt_color_map.h>
 #include <qwt_picker_machine.h>
-#include <qwt_point_data.h>
-
 #include <qwt_matrix_raster_data.h>
+
+#if QWT_VERSION >= 0x061000
+#include <qwt_point_data.h>
+#endif
+
 
 #include "graph.h"
 #include "ui_graph.h"
@@ -34,7 +37,11 @@ QwtText MyPicker::trackerTextF(const QPointF &pos) const {
 
 }
 
+#if QWT_VERSION >= 0x061000
 MyPicker::MyPicker(QWidget *canvas):
+#else
+MyPicker::MyPicker(QwtPlotCanvas *canvas):
+#endif
   QwtPlotPicker(canvas),
   val(0),
   latestPos(0,0)
@@ -149,12 +156,17 @@ public :
 
     grid->enableXMin(true);
     grid->enableYMin(true);
+#if QWT_VERSION >= 0x061000
     QPen pen=grid->majorPen();
     pen.setStyle(Qt::DashLine);
     grid->setMajorPen(pen);
     pen=grid->minorPen();    
     pen.setStyle(Qt::DotLine);
     grid->setMinorPen(pen);
+#else
+    grid->setMajPen(Qt::DashLine);
+    grid->setMinPen(Qt::DotLine);
+#endif
 
     _size = _yData.size();
     QVector<double> xData(_size);
@@ -524,7 +536,11 @@ void Graph::showGrid() {
       dynamic_cast<PlotLine*>(pdata)->grid->detach();
   } else if (dynamic_cast<PlotMap*>(pdata)) {
     const QList<double> & contourLevels = ui->plot->axisScaleDiv(QwtPlot::yRight)
+#if QWT_VERSION >= 0x061000        
         .ticks(QwtScaleDiv::MajorTick);
+#else
+        ->ticks(QwtScaleDiv::MajorTick);
+#endif
     dynamic_cast<PlotMap*>(pdata)->setContourLevels(contourLevels);
     dynamic_cast<PlotMap*>(pdata)->setDisplayMode(QwtPlotSpectrogram::ContourMode,
                                                   ui->showGrid->isChecked());
@@ -536,14 +552,22 @@ void Graph::showGrid() {
 void Graph::setLogarithmic() {
   if( dynamic_cast<PlotLine*>(pdata) ) {
     if (ui->logY->isChecked())
+#if QWT_VERSION >= 0x061000
       ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine);
+#else
+      ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
+#endif
     else
       ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLinearScaleEngine);
   } else if (dynamic_cast<PlotMap*>(pdata)) {
     QwtColorMap * cmap = ui->logY->isChecked() ? new LogColorMap : new QwtLinearColorMap;
     dynamic_cast<PlotMap*>(pdata)->setColorMap(cmap);
     if (ui->logY->isChecked())
+#if QWT_VERSION >= 0x061000      
       ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLogScaleEngine);
+#else
+      ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLog10ScaleEngine);
+#endif
     else
       ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLinearScaleEngine);
   }
