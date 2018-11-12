@@ -13,7 +13,7 @@
 #include <qwt_picker_machine.h>
 #include <qwt_matrix_raster_data.h>
 
-#if QWT_VERSION >= 0x061000
+#if QWT_VERSION >= 0x060100
 #include <qwt_point_data.h>
 #endif
 
@@ -37,7 +37,7 @@ QwtText MyPicker::trackerTextF(const QPointF &pos) const {
 
 }
 
-#if QWT_VERSION >= 0x061000
+#if QWT_VERSION >= 0x060100
 MyPicker::MyPicker(QWidget *canvas):
 #else
 MyPicker::MyPicker(QwtPlotCanvas *canvas):
@@ -156,7 +156,7 @@ public :
 
     grid->enableXMin(true);
     grid->enableYMin(true);
-#if QWT_VERSION >= 0x061000
+#if QWT_VERSION >= 0x060100
     QPen pen=grid->majorPen();
     pen.setStyle(Qt::DashLine);
     grid->setMajorPen(pen);
@@ -536,7 +536,7 @@ void Graph::showGrid() {
       dynamic_cast<PlotLine*>(pdata)->grid->detach();
   } else if (dynamic_cast<PlotMap*>(pdata)) {
     const QList<double> & contourLevels = ui->plot->axisScaleDiv(QwtPlot::yRight)
-#if QWT_VERSION >= 0x061000        
+#if QWT_VERSION >= 0x060100
         .ticks(QwtScaleDiv::MajorTick);
 #else
         ->ticks(QwtScaleDiv::MajorTick);
@@ -552,7 +552,7 @@ void Graph::showGrid() {
 void Graph::setLogarithmic() {
   if( dynamic_cast<PlotLine*>(pdata) ) {
     if (ui->logY->isChecked())
-#if QWT_VERSION >= 0x061000
+#if QWT_VERSION >= 0x060100
       ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLogScaleEngine);
 #else
       ui->plot->setAxisScaleEngine(QwtPlot::yLeft, new QwtLog10ScaleEngine);
@@ -563,7 +563,7 @@ void Graph::setLogarithmic() {
     QwtColorMap * cmap = ui->logY->isChecked() ? new LogColorMap : new QwtLinearColorMap;
     dynamic_cast<PlotMap*>(pdata)->setColorMap(cmap);
     if (ui->logY->isChecked())
-#if QWT_VERSION >= 0x061000      
+#if QWT_VERSION >= 0x060100
       ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLogScaleEngine);
 #else
       ui->plot->setAxisScaleEngine(QwtPlot::yRight, new QwtLog10ScaleEngine);
