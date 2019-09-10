@@ -21,6 +21,15 @@ FORMS += mainwindow.ui \
 
 RESOURCES = scanmx.qrc
 LIBS += -lqtpv -lqtpvwidgets  -lqcamotor  -lqcamotorgui
+
+icon.path = $$[INSTALLBASE]/share/icons
+icon.files += MotorScanIcon.png
+
+desktop.path = $$[INSTALLBASE]/share/applications
+desktop.files += MotorScan.desktop
+
+
 target.files = $$[TARGET]
 target.path = $$[INSTALLBASE]/bin
-INSTALLS += target
+INSTALLS += target desktop icon
+

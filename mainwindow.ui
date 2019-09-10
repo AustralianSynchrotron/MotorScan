@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="scanmx.qrc">
-    <normaloff>:/new/prefix1/Graph1-small.png</normaloff>:/new/prefix1/Graph1-small.png</iconset>
+    <normaloff>:/new/prefix1/MotorScanIcon.png</normaloff>:/new/prefix1/MotorScanIcon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">

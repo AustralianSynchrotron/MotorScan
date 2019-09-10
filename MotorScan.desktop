@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Motor Scan 
+Exec=MotorScanMX
+Icon=MotorScanIcon.png
+Terminal=false
+Categories=Science;X-IMBL;
+StartupNotify=true
