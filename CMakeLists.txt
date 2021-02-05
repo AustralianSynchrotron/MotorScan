@@ -53,6 +53,7 @@ target_link_libraries(MotorScanMX
   Qt5::Widgets
   Qt5::PrintSupport
   ${QWT_LIBRARIES}
+  poptmx
 )
 
 target_compile_options(MotorScanMX

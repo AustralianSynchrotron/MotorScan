@@ -13,17 +13,68 @@
 
 
 
+
+
+
+
+
+#include <poptmx.h>
+
+struct clargs {
+  std::string command;
+  bool start;
+  std::string config;
+  poptmx::OptionTable table;
+  clargs(int argc, char *argv[]);
+};
+
+
+clargs::clargs(int argc, char *argv[]) :
+  start(false),
+  config(QDir::homePath().toStdString() + "/.scanmx"),
+  table("Motor scan.")
+{
+
+  table
+      .add(poptmx::NOTE,     "OPTIONS:")
+      .add(poptmx::OPTION,   &start, 's', "start",
+           "Starts scan automatically.",
+           "Equal pushing the \"Start\" button after entering all values.")
+      .add(poptmx::OPTION,   &config, 'c', "config",
+           "Configuration file to load.",
+           "")
+      .add_standard_options();
+
+  if ( ! table.parse(argc,argv) )
+    exit(0);
+
+  command = table.name();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 QSettings * MainWindow::globalSettings = new QSettings("/etc/scanmx", QSettings::IniFormat);
 const QString MainWindow::badStyle = "background-color: rgba(255, 0, 0, 64);";
 const QString MainWindow::goodStyle = QString();
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(int argc, char *argv[], QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
   contextPos(NAN,NAN),
   contextVal(NAN),
   nowLoading(true)
 {
+  clargs args(argc, argv);
 
   ui->setupUi(this);
   connect(ui->addSignal, SIGNAL(clicked()), SLOT(addSignal()));
@@ -87,8 +138,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
   // Restore local settings
-  localSettings = new QSettings(QDir::homePath() + "/.scanmx",
-                                QSettings::IniFormat);
+  localSettings = new QSettings(QString::fromStdString(args.config), QSettings::IniFormat);
   loadSettings();
 
 
@@ -106,6 +156,11 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->autoName, SIGNAL(toggled(bool)), SLOT(storeSettings()));
 
   nowLoading = false;
+
+  if (args.start) {
+    connect (this, SIGNAL(scanComplete()), this, SLOT(close()) );
+    QTimer::singleShot(500, this, SLOT(startScan()));
+  }
 
 }
 
@@ -329,10 +384,10 @@ void MainWindow::loadSettings() {
     ui->saveDir->setText(localSettings->value("saveDir").toString());
   else
     ui->saveDir->setText(QDir::homePath());
-  if ( localSettings->contains("saveName") )
-    ui->saveName->setText(localSettings->value("saveName").toString());
   if ( localSettings->contains("autoName") )
     ui->autoName->setChecked( localSettings->value("autoName").toBool() );
+  if ( localSettings->contains("saveName") )
+    ui->saveName->setText(localSettings->value("saveName").toString());
 
   updatePlots();
 
@@ -827,6 +882,7 @@ void MainWindow::startScan(){
     QHash<Axis*,double> yPos;
     if ( ui->scan2D->isChecked() ) {
 
+      setenv("YPOINT", QString::number(ypoint).toLatin1(), 1);
       yPos.clear();
       foreach(Axis * ax, yAxes)
         ax->motor->motor()->goUserPosition
@@ -855,6 +911,7 @@ void MainWindow::startScan(){
     QHash<Axis*,double> xPos;
     for( int xpoint = 0 ; xpoint < xPoints ; xpoint++ ) {
 
+      setenv("XPOINT", QString::number(xpoint).toLatin1(), 1);
       ui->dataTable->insertRow(curpoint);
       ui->dataTable->setVerticalHeaderItem(curpoint,
                                            new QTableWidgetItem(QString::number(curpoint+1)));
@@ -942,6 +999,10 @@ void MainWindow::startScan(){
   // finishing
   ui->startStop->setText("Start");
   ui->setup->setEnabled(true);
+
+  emit scanComplete();
+
+
 }
 
 

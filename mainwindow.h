@@ -17,6 +17,7 @@
 #include <QProcess>
 #include <QComboBox>
 #include <qcamotorgui.h>
+#include <poptmx.h>
 
 #include "graph.h"
 #include "axis.h"
@@ -32,7 +33,7 @@ class MainWindow : public QMainWindow {
 
 public:
 
-    MainWindow(QWidget *parent = 0);
+    MainWindow(int argc, char *argv[], QWidget *parent = 0);
 
 private:
 
@@ -101,6 +102,10 @@ private slots:
     void catchCopyPosition();
     void catchCopyValue();
 
+
+signals:
+
+    void scanComplete();
 
 
 
